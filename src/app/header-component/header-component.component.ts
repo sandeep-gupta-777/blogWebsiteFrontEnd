@@ -55,8 +55,19 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
     // this.helper.triggerIconGridComponentGetImages('AllIcons','POST',  newValue);
 
   }
+  lastCall = setTimeout(()=>{},0);
+
+  debounce(args,interval=200) {//TODO: shift this to helper class
+    //https://stackoverflow.com/questions/18177174/how-to-limit-handling-of-event-to-once-per-x-seconds-with-jquery-javascript
+    // let interval = 200;//100ms
+    clearTimeout(this.lastCall);
+    this.lastCall = setTimeout(() => {
+      this.triggerAllResultsObservable(args);
+    }, interval);
+}
+
   triggerAllResultsObservable(newValue?:string){
-    console.log('all icon clicked');
+    console.log(newValue);
     //navigate to http://localhost:4200/icons page is not already navigated
     if(this.router.url !== "/"+this.global._backendRoute_AllResults)//these are frontend routes but with same value
       this.router.navigate(["/"+ this.global._backendRoute_AllResults]);

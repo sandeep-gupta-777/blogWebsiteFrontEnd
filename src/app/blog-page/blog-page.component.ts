@@ -195,6 +195,7 @@ export class BlogPageComponent implements OnInit, AfterViewInit, OnDestroy, OnCh
       // this.blogInstance.blogAuthor_id = this.global.getLoggedInUserDetails()._id;
 
     this.messageFromServer = 'Saving...';
+    let text = this.editor.getContent({format: 'text'});
 
     if(this.blogTitle==="")
       {

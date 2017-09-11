@@ -172,7 +172,7 @@ export class BlogGridComponent implements OnInit {
 
   ngOnInit() {
 
-    this.resultsArray = this.global.resultsArray;
+    this.resultsArray = this.global.resultsArray || [];
 
     console.log('ngOnInIT================================================================================');
 
