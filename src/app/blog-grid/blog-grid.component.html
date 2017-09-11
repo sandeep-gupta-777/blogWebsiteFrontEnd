@@ -1,0 +1,82 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-xs-12 ">
+      <!--dropdown begins-->
+      <div class="dropdown pull-right " *ngIf="resultsArray && resultsArray.length>=1">
+        <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true">
+          Sort By
+          <span class="caret"></span>
+        </button>
+        <!--TODO: use pipes instead of methods in sorting-->
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li><a (click)="sortbyPropery='-blogRelevency'">blogRelevency
+            <span *ngIf="sortbyPropery === '-blogRelevency'" class="glyphicon glyphicon-ok"></span>
+          </a></li>
+          <li><a (click)="sortbyPropery='-blogCreationDate'">Latest<span
+            *ngIf="sortbyPropery === '-blogCreationDate'" class="glyphicon glyphicon-ok"></span></a></li>
+          <li><a (click)="sortbyPropery='-blogLikes'">Likes<span
+            *ngIf="sortbyPropery === '-blogLikes'" class="glyphicon glyphicon-ok"></span></a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div>
+      <!--dropdown ends-->
+
+    </div>
+    <br>
+    <br>
+    <div class="col-xs-12 horizontal-center" *ngIf="resultsArray.length===0">
+      <h1 class="whiteText">No Results</h1>
+    </div>
+    <div class="col-xs-12 horizontal-center" *ngIf="showLoadingIcon">
+      <i class="fa fa-refresh fa-spin" style="font-size:55px;color:white"></i>
+    </div>
+  </div>
+
+  <div class="row whiteBackgroud" *ngFor="let result of resultsArray|sortArrayBy : sortbyPropery">
+    <div class="">
+      <div class="col-xs-12 ">
+        <a *ngIf="isUserAlsoOwnerOfThisBlogPost(result.blogAuthor_id)" role="button" class="btn btn-danger" [routerLink]="'/blogEdit/' + result._id">Edit
+        </a>
+      </div>
+      <br>
+      <br>
+      <!--image starts here-->
+      <div class="col-xs-2">
+        <img class="img-responsive" style="border: 3px black solid"
+             src="https://ciphertrick.com/wp-content/uploads/2017/03/featured-1-900x420.jpg"
+             alt="">
+      </div>
+      <!--image ends here-->
+
+      <div class="col-xs-10 blackBackgroud ">
+        <!--result title here-->
+        <h3 class="linkCursor border  whiteText" style="margin-top: 2px;font-family: sans-serif;font-weight: bold"
+            [innerHTML]="result.blogTitle" (click)="openBlogDisplayPage(result)"></h3>
+
+      </div>
+      <p class="col-xs-10 whiteText blackBackgroud " [innerHTML]="result.blogText">
+        <!--in grid we use text but in full text we use htnml-->
+
+        <!--result snippet here-->
+      </p>
+      <div class="col-xs-12">
+        <hr>
+      </div>
+
+
+    </div>
+  </div>
+  <br><br>
+  <div class="row">
+    <div class="col-xs-12 horizontal-center">
+      <div class="loadMoreContainer" *ngIf="resultsArray && showLoadMore">
+        <button class="btn btn-default btn-sm" (click)="loadMore()">Load More</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

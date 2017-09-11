@@ -1,0 +1,16 @@
+.col-sm-12, .col-sm-4{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.container-fluid{
+  height: 30%;
+  /*width: 75%;*/
+}
+
+a {
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}

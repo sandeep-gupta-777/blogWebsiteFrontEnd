@@ -1,0 +1,36 @@
+/*select.ng-touched.ng-invalid,input.ng-touched.ng-invalid{*/
+/*border: 1px solid red;*/
+/*!*background-color: red;*!*/
+/*}*/
+
+.vertical-center{
+  display: flex;
+  align-items: center;
+}
+.horizontal-center{
+  display: flex;
+  justify-content: center;
+}
+.input-group{
+  margin-bottom: 2px;
+}
+
+.whiteText{
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .container{
+    width: 90%;
+  }
+}
+@media (min-width: 768px) {
+  .container{
+    width: 35%;
+  }
+}
+
+input.ng-invalid.ng-touched {
+  border: 2px solid red;
+  /*background-color: red;*/
+}

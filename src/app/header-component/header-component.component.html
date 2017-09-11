@@ -1,0 +1,112 @@
+<div class=" border center-vertical center-vertical"
+     style="height: 110px;width: 100%;">
+
+  <div class="container border" style="width: 80%;height: 70%">
+
+    <div class="row center-vertical" style="height: 100%">
+      <!--logo begins-->
+      <div class="col-xs-2 border center-vertical" style="height: 100%;margin-bottom: 10px; margin-right: 10px">
+        <!--<a routerLink="/" class="linkCursor logoSize border" style="height: 100%">-->
+        <a routerLink="/"><img  src="./assets/logo1.png " style="width: 110%"></a>
+        <!--logo ends-->
+        <!--</a>-->
+      </div>
+
+      <!--search box starts-->
+      <div class="col-xs-8">
+        <div class="input-group input-group-lg white-border shadow" *ngIf="router.url !=='/'" style="height: 20%">
+          <input type="text" class="form-control place form-element" [ngModel]="searchQuery"
+                 (ngModelChange)="triggerAllResultsObservable($event)"
+                 [ngModelOptions]="{standalone: true}" placeholder="Search icons...">
+          <div class="input-group-btn" (click)="triggerAllResultsObservable(searchQuery)">
+            <button class="btn btn-default form-element" type="submit">
+              <i class="glyphicon glyphicon-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!--search box ends-->
+
+      <div class="col-xs-2 ">
+
+        <div class="row">
+
+          <div class="col-md-12 border pull-left" style="display: flex;flex-wrap: nowrap">
+
+            <!--All icons button begins-->
+            <button (click)="triggerAllResultsObservable('')"  routerLink="icons" class="btn btn-primary btn-lg shadow "><i class="fa fa-image"></i></button>
+            <!--All icons button ends-->
+
+            <!--signup dropdown begins-->
+            <div *ngIf="!isLoggedIn()" class="dropdown right-nav-link"><a class="dropdown-toggle "
+                                                                          style="font-size: 25px;font-weight: bold"
+                                                                          data-toggle="dropdown" href="#">
+              <button class="btn btn-primary btn-lg shadow "><i class="fa fa-user"></i> <span
+                class="caret"></span></button>
+
+
+            </a>
+              <ul class="dropdown-menu">
+                <li><a routerLink="signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a routerLink="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              </ul>
+            </div>
+            <!--signup dropdown ends-->
+
+            <!--Dashboard button begins-->
+            <div *ngIf="isLoggedIn()" class="dropdown right-nav-link"><a class="dropdown-toggle "
+                                                                          style="font-size: 25px;font-weight: bold"
+                                                                          data-toggle="dropdown" href="#">
+              <button class="btn btn-primary btn-lg shadow "><i class="fa fa-dashboard"></i> <span
+                class="caret"></span></button>
+
+
+            </a>
+              <ul class="dropdown-menu">
+                <li><a >Hi {{userfirstName| uppercase}}!</a></li>
+                <li><a routerLink="dashboard">Dashboard</a></li>
+                <li><a href="#">Settings</a></li>
+                <li (click)="logout()"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+              </ul>
+            <!--Dashboard button ends-->
+
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

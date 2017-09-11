@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row ">
+
+    <div class="col-xs-12">
+      <h1 class="whiteText horizontal-center">Comments</h1>
+    </div>
+
+    <div class="col-xs-12 border">
+      <button class="btn btn-primary pull-right" (click)="addComment()">Add comment</button>
+    </div>
+
+    <div class="col-xs-12" *ngIf="showAddCommentBox">
+      <app-comment [showEditBox] = true
+                   [parentLevel]=-1
+      [parentID]="clickedCommentID" [comment]="null" [parentRankCode]="'-1'" [commentBlog_id]="commentBlog_id"
+      ></app-comment>
+    </div>
+    <div class="col-xs-12 border">
+
+      <app-comment *ngFor="let comment of commentArray|sortArrayBy:'commentRankCode'" [comment]="comment" [commentBlog_id]="commentBlog_id"></app-comment>
+
+    </div>
+
+
+  </div>
+</div>
+<br>
+
+
+

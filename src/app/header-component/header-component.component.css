@@ -1,0 +1,24 @@
+
+.border{
+  /*border: solid 1px red;*/
+}
+/*======================*/
+.center-vertical{
+  display: flex;
+  align-items: center;
+}
+.center-horizontal{
+  display: flex;
+  justify-content: center;
+}
+
+.white-border{
+  /*border: green solid 3px;*/
+}
+.shadow {
+  box-shadow:1px 2px 0px 0px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+  background-color: #031d38 !important;
+}

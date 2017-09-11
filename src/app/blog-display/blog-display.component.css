@@ -1,0 +1,39 @@
+.container{
+  width: 60%;
+}
+
+.title-strip{
+  background-color: white;
+}
+
+.whiteText{
+  color: white;
+}
+:host /deep/ .searchQuery{
+  color: yellow;
+}
+
+.border{
+  border: solid white 2px;
+}
+
+.blogTitle{
+  margin: 20px;
+  font-weight: bold;
+}
+
+.blogMetaData{
+  margin: 10px;
+}
+
+
+.bodyText{
+  color: #000;
+  font-size: 20px;
+  margin: 50px 50px ;
+}
+
+.vertical-center{
+  display: flex;
+  align-items: center;
+}
