@@ -51,7 +51,6 @@ export class BlogDisplayComponent implements OnInit {
 
   constructor(private shared: Shared, private el: ElementRef, private helper: Helper, private global: Global, private router: Router,
               private route: ActivatedRoute,private ref : ChangeDetectorRef) {
-    console.log('helloooooooo');
 
   }
 

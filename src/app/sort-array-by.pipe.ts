@@ -5,12 +5,16 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class SortArrayByPipe implements PipeTransform {
 
-  transform(array: any, property: any): any {
-    console.log('sorting by ' + property);
-    let sortedArray = array.sort(this.dynamicSort(property));
-    console.log(sortedArray);
-    return sortedArray;
 
+  transform(array: any, property1, property2): any {
+    console.log(property1);
+    console.log(property2);
+    // let property2=  '-blogCreationDate';
+    array = array.sort(this.dynamicSort(property1));
+    if(property2)
+    array = array.sort(this.dynamicSort(property2));
+    console.log('sorting the array');
+    return array;
   }
 
   dynamicSort(property:string) {

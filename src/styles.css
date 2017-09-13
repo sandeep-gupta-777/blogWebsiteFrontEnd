@@ -5,7 +5,7 @@ body{
   /*background-image: url('https://scotch.io/img/icon-background.png');*/
   /*background-image: url('http://gdj.graphicdesignjunction.com/wp-content/uploads/2011/02/background-pattern-design-79.jpg');*/
   /*background-image: url('http://www.designbolts.com/wp-content/uploads/2012/11/Dark-textured-pattern-for-backgrounds.jpg');*/
-  background-image: url('http://www.designbolts.com/wp-content/uploads/2012/11/Free-Simple-Black-Seamless-Pattern-for-Website-Background.jpg');
+  /*background-image: url('http://www.designbolts.com/wp-content/uploads/2012/11/Free-Simple-Black-Seamless-Pattern-for-Website-Background.jpg');*/
   /*background-image: url('http://www.designbolts.com/wp-content/uploads/2012/11/BO-Play-Free-Black-Dotted-Seamless-Pattern.jpg');*/
   /*background-image: url('https://media.giphy.com/media/aqkJ9q160Zmta/giphy.gif');*/
 
@@ -15,7 +15,14 @@ body{
   /*background-image: url('http://www.designbolts.com/wp-content/uploads/2012/11/Free-black-leather-seamless-photoshop-pattern-free-download.jpg');*/
   /*background-color: rgba(0, 0, 0, 0.92);*/
   background-size: contain;
-  background-color: #bfbfbf;
+  background-color: #f7f7f7;
+  /*this is to keep footer at at bottom*/
+  height: 100%;
+}
+html{
+  /*this is to keep footer at at bottom*/
+
+  height: 100%;
 }
 * {
   border-radius: 0 !important;
@@ -23,3 +30,6 @@ body{
 .language-javascript{
   border: 1px solid rgba(0, 0, 0, 0.25);
 }
+
+
+

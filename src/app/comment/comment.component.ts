@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BlogComment} from "../models";
 import {Helper} from "../helper.service";
 
@@ -14,6 +14,9 @@ export class CommentComponent implements OnInit {
   @Input() parentID;
   @Input() parentRankCode;
   @Input() commentBlog_id;
+  @Input() isItANewComment=false;
+
+  @Output() changeCommentThreadEvent = new EventEmitter();
   showReplyBox = false;
   replyText = "";
 
@@ -48,6 +51,11 @@ export class CommentComponent implements OnInit {
         console.log(this.comment);
       this.helper.makePostRequest('users/saveComment', this.comment).subscribe(value=>{
         console.log(value);
+        if(this.isItANewComment){
+          this.changeCommentThreadEvent.emit(this.comment);
+          this.editedCommentText = "";
+
+        }
       });
       this.showEditBox = !this.showEditBox;
     }

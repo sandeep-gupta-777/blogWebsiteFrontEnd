@@ -1,5 +1,5 @@
-<div class=" border center-vertical center-vertical"
-     style="height: 110px;width: 100%;">
+<div class=" border center-vertical center-vertical card1"
+     style="height: 110px;width: 100%;background-color: black;">
 
   <div class="container border" style="width: 80%;height: 70%">
 
@@ -17,7 +17,7 @@
         <div class="input-group input-group-lg white-border shadow" *ngIf="router.url !=='/'" style="height: 20%">
           <input type="text" class="form-control place form-element" [ngModel]="searchQuery"
                  (ngModelChange)="debounce($event,200)"
-                 [ngModelOptions]="{standalone: true}" placeholder="Search icons...">
+                 [ngModelOptions]="{standalone: true}" placeholder="Search blogs...">
           <div class="input-group-btn" (click)="debounce(searchQuery,0)">
             <button class="btn btn-default form-element" type="submit">
               <i class="glyphicon glyphicon-search"></i>

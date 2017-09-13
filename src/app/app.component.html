@@ -1,6 +1,7 @@
 
 <app-header-component ></app-header-component>
-<div class="wrapper">
+<!--style is to keep footer at at bottom-->
+<div class="wrapper" style="min-height:70%; border: 1px solid red">
   <!--<app-sidebar></app-sidebar>-->
   <!--<app-image-side-panel style="position: fixed;"></app-image-side-panel>-->
   <router-outlet></router-outlet>
@@ -9,7 +10,9 @@
   <!--<app-thread class="border1"></app-thread>-->
   <br>
 </div>
-<app-footer-component ></app-footer-component>
+<div id="footer">
+  <app-footer-component ></app-footer-component>
+</div>
 <!--<app-admin></app-admin>-->
 
 

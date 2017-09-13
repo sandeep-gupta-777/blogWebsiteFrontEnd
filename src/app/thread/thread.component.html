@@ -2,7 +2,7 @@
   <div class="row ">
 
     <div class="col-xs-12">
-      <h1 class="whiteText horizontal-center">Comments</h1>
+      <h1 class="horizontal-center">Comments</h1>
     </div>
 
     <div class="col-xs-12 border">
@@ -10,14 +10,15 @@
     </div>
 
     <div class="col-xs-12" *ngIf="showAddCommentBox">
-      <app-comment [showEditBox] = true
-                   [parentLevel]=-1
+      <app-comment [showEditBox] = true (changeCommentThreadEvent)="updateThreadEvent($event)"
+                   [parentLevel]=-1 [isItANewComment]="true"
       [parentID]="clickedCommentID" [comment]="null" [parentRankCode]="'-1'" [commentBlog_id]="commentBlog_id"
       ></app-comment>
     </div>
     <div class="col-xs-12 border">
 
-      <app-comment *ngFor="let comment of commentArray|sortArrayBy:'commentRankCode'" [comment]="comment" [commentBlog_id]="commentBlog_id"></app-comment>
+      <app-comment *ngFor="let comment of commentArray|sortArrayBy:'commentRankCode' :'-commentDate'" (changeCommentThreadEvent)="updateThreadEvent($event)"
+                   [comment]="comment" [commentBlog_id]="commentBlog_id"></app-comment>
 
     </div>
 

@@ -10,7 +10,7 @@
   color: white;
 }
 :host /deep/ .searchQuery{
-  color: yellow;
+  color: blue;
 }
 
 .border{

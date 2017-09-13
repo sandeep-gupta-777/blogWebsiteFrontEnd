@@ -11,10 +11,8 @@ export class TagsInputDirective {
   constructor(private el: ElementRef) {
     // (<any>jquery(this.el.nativeElement)).daterangepicker();
     // (<any>jquery(this.el.nativeElement)).tagsinput('items');
-    console.log(this.el.nativeElement);
   }
   ngAfterViewInit() {
     (<any>jQuery(this.el.nativeElement)).tagsinput(['sabdeep',"gupta"]);
-    console.log((<any>jQuery(this.el.nativeElement)).tagsinput());
   }
 }

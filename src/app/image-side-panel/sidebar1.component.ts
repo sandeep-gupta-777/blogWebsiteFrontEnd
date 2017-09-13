@@ -32,7 +32,6 @@ array1 = ['sandeep','guopta'];
     //TODO: this method is called by 4 time, debug it
     let temp = this.global.getLoggedInUserDetails();
     if(!temp) return false;
-    console.log(' in isUserAlsoOwnerOfThisImage');
     return imageAuthor_id ===this.global.getLoggedInUserDetails()._id;
   }
 

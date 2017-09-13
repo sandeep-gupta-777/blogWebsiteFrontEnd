@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {BlogComment} from "../models";
 import {Helper} from "../helper.service";
 import {factoryOrValue} from "rxjs/operator/multicast";
@@ -15,7 +15,7 @@ export class ThreadComponent implements OnInit {
   clickedCommentLevel ;
   clickedCommentID;
   @Input() commentBlog_id;
-  constructor(private helper:Helper,private global:Global){
+  constructor(private helper:Helper,private global:Global,private ref : ChangeDetectorRef){
     // this.helper.makePostRequest('blogComments',{commentBlog_id:'59abcbc02e068633ec82f4ad'}).subscribe(
     //   (value)=>{
     //     console.log(value);
@@ -25,6 +25,16 @@ export class ThreadComponent implements OnInit {
     // );
 
   }
+
+    updateThreadEvent(comment:BlogComment){
+    console.log('pushing following comment');
+    console.log(comment);
+    this.commentArray.unshift(comment);
+    console.log(this.commentArray);
+    this.showAddCommentBox = false;
+    this.ref.detectChanges();
+    }
+
   commentArray: BlogComment[] = [
     // {
     //   commentText:'hello worlds',

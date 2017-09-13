@@ -50,6 +50,7 @@ export class BlogGridComponent implements OnInit {
   private subscriptionPost;
   @Input() imageContainers: ImageContainer[]  = null;
   @Input() resultsArray: BlogPost[]  = null;
+  searchQueryTImeStamp;
   constructor(private sharedService: Shared, private helper:Helper, private global:Global, private router: Router) {
   }
 
@@ -64,7 +65,6 @@ export class BlogGridComponent implements OnInit {
     //TODO: this method is called by 4 time, debug it
     let temp = this.global.getLoggedInUserDetails();
     if(!temp) return false;
-    console.log(' in isUserAlsoOwnerOfThisImage');
     return imageAuthor_id ===this.global.getLoggedInUserDetails()._id;
   }
 
@@ -94,7 +94,6 @@ export class BlogGridComponent implements OnInit {
     /*if the newly loaded image count is less than the demanded => means there are no more such imagges
      * therefore, its safe to disable load more button
      * */
-    console.log('load more click');
     let previouslyLoadedImagesCount,newImagesToBeLoadedCount = 40;
 
     let previouslyLoadedResultCount,newResultsToBeLoadedCount = 1;
@@ -114,12 +113,10 @@ export class BlogGridComponent implements OnInit {
       //will trigger /loadMoreResults in backend
       .subscribe(value=>{
         this.showLoadingIcon = false;
-        console.log(value);
         value.length<1?this.showLoadMore=false:this.showLoadMore=true;//TODO: change 1 to  10
         debugger;
         // this.imageContainers = this.imageContainers.concat(value);
         this.resultsArray = this.resultsArray.concat(value);
-        console.log(this.resultsArray);
         // this.sortImageContainerArrayBy(this.sortbyPropery);
         this.sortResultsArrayBy(this.sortbyPropery);
       });
@@ -138,7 +135,6 @@ export class BlogGridComponent implements OnInit {
   // }
 
   openBlogDisplayPage(blogPost:BlogPost){
-    console.log(blogPost);
 
     this.global.previousSRPURL = window.location.pathname;
 
@@ -174,31 +170,34 @@ export class BlogGridComponent implements OnInit {
 
     this.resultsArray = this.global.resultsArray || [];
 
-    console.log('ngOnInIT================================================================================');
 
 
     this.sharedServiceSubscription = this.sharedService._observable.subscribe((value)=>{
-      console.log(value);
       // this.imageContainers = value.imageContainers;
     });
 
     //need to change
     // this.triggerGetResultsEventSubscription = this.helper.triggerIconGridComponentGetImagesEvent.subscribe(({url,requestType, searchQuery})=>{
     this.triggerGetResultsEventSubscription = this.helper.getResultEvent.subscribe(({url,requestType, searchQuery})=>{
-      console.log('Getting images from server, triggerIconGridComponentGetImagesEvent');
+      console.log("frontend: " + searchQuery);
+      this.searchQueryTImeStamp = Date.now(); //at this time search is performed
       let user_id = localStorage.getItem('userID');
       this.showLoadingIcon=true;
       if(requestType==='POST')
       {
         if(!searchQuery) searchQuery ="";
 
-        this.subscriptionPost = this.helper.makePostRequest(url,{user_id, searchQuery:searchQuery}).subscribe(
+        this.subscriptionPost = this.helper.makePostRequest(url,{user_id, searchQuery:searchQuery,searchQueryTImeStamp:this.searchQueryTImeStamp}).subscribe(
           (value) =>{
+
+            if(value.searchQueryTImeStamp< this.searchQueryTImeStamp){
+              console.log('old search...discarded');
+              return;
+            }
+            value = value.value;
             this.showLoadingIcon=false;
-            console.log(value);
             // this.imageContainers = value;
             this.resultsArray = value;
-            console.log(this.resultsArray);
             // this.sortImageContainerArrayBy('-imageVoteCount');
             this.sortResultsArrayBy(this.sortbyPropery);//change here
             // value.length<10?this.showLoadMore=false:this.showLoadMore=true;
@@ -218,7 +217,6 @@ export class BlogGridComponent implements OnInit {
         this.subscriptionGet =  this.helper.makeGetRequest(url).subscribe(
           (value) =>{
             this.showLoadingIcon=false;
-            console.log(value);
             // this.imageContainers = value;
             this.resultsArray = value;
             // this.sortImageContainerArrayBy('-imageVoteCount');
