@@ -40,6 +40,7 @@ import { ImageModalComponent } from './image-modal/image-modal.component';
 import { ImageGridComponent } from './image-grid/image-grid.component';
 import { ThreadComponent } from './thread/thread.component';
 import { CommentComponent } from './comment/comment.component';
+import { TrimStringPipe } from './trim-string.pipe';
 
 //routes
 const appRoutes: Routes = [
@@ -98,7 +99,8 @@ const appRoutes: Routes = [
     ImageModalComponent,
     ImageGridComponent,
     ThreadComponent,
-    CommentComponent
+    CommentComponent,
+    TrimStringPipe
 
 
   ],

@@ -49,15 +49,20 @@
     <!--blog body ends here-->
 
 
-    <div class="col-xs-12 vertical-center" style="background-color: black; height: 30px">
+    <div class="col-xs-11 vertical-center" style="background-color: black; height: 30px">
       <div >
         <a style="cursor: pointer;" *ngFor="let tag of blogPost.blogTags" (click)="triggerGetResultEvent(tag)"> <span
           class="label label-primary">{{tag}}</span></a>
 
       </div>
-
     </div>
+    <!--Like button stars -->
+    <div class="vertical-center col-xs-1 " style="background-color: black;color: red; height: 30px">
+      <i class="fa fa-heart pull-right" (click)="toggleLike()"></i> <span> 22</span>
+    </div>
+    <!--Like button ends -->
   </div>
+
 </div>
 
 <app-thread class="active" [commentBlog_id]="_id"></app-thread>

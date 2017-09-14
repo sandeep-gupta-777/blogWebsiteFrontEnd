@@ -28,13 +28,13 @@
     </div>
     <br>
     <br>
-    <div class="col-xs-12 horizontal-center" *ngIf=" resultsArray && resultsArray.length===0">
-      {{resultsArray}}
-      <h1>No Results</h1>
-    </div>
-    <div class="col-xs-12 horizontal-center" *ngIf="showLoadingIcon">
-      <i class="fa fa-refresh fa-spin" style="font-size:55px;color: black"></i>
-    </div>
+    <!--<div class="col-xs-12 horizontal-center" *ngIf=" resultsArray && resultsArray.length===0">-->
+      <!--{{resultsArray}}-->
+      <!--<h1>No Results</h1>-->
+    <!--</div>-->
+    <!--<div class="col-xs-12 horizontal-center" *ngIf="showLoadingIcon">-->
+      <!--<i class="fa fa-refresh fa-spin" style="font-size:55px;color: black"></i>-->
+    <!--</div>-->
   </div>
 
   <div class="row " *ngFor="let result of resultsArray|sortArrayBy : sortbyPropery" style="margin-bottom: 10px">
@@ -86,6 +86,15 @@
   <br><br>
 
   <div class="row">
+    <div class="col-xs-12 horizontal-center" *ngIf=" resultsArray && resultsArray.length===0 && !showLoadingIcon">
+      <h1>No Results</h1>
+    </div>
+    <div class="col-xs-12 horizontal-center" *ngIf="showTimeoutError">
+      <p>Timeout Error. Please reload the page</p>
+    </div>
+    <div class="col-xs-12 horizontal-center" *ngIf="showLoadingIcon && !showTimeoutError" style="margin-bottom: 10px">
+      <i class="fa fa-refresh fa-spin" style="font-size:55px;color: black"></i>
+    </div>
     <div class="col-xs-12 horizontal-center">
       <div class="loadMoreContainer" *ngIf="resultsArray && showLoadMore">
         <button class="btn btn-default" (click)="loadMore()">Load More</button>

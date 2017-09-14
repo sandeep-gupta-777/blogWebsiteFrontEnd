@@ -39,7 +39,7 @@ export class BlogDisplayComponent implements OnInit {
     blogAuthor_fullName:"loading...",
     blogCreationDate:new Date(),
     blogLastUpdatedDate:new Date(),
-    blogLikes:-1,
+    blogLikes:["asdasd"],
     blogViews:-1,
     blogComments:["loading..."],
     blogTags:["loading..."],
@@ -165,6 +165,23 @@ export class BlogDisplayComponent implements OnInit {
       this.ref.detectChanges();
 
     });
+  }
+
+
+  toggleLike(){
+    /*likes should be an array
+    * toggle users id is found in that array
+    * */
+    let user_id = this.global.getLoggedInUserDetails()._id;
+    let indexOfUserIDInLikedArry = this.blogPost.blogLikes.indexOf(user_id);
+    if(indexOfUserIDInLikedArry===-1){
+      this.blogPost.blogLikes.push(user_id);
+    }
+    else {
+      this.blogPost.blogLikes.splice(indexOfUserIDInLikedArry,1);
+    }
+    //TODO: save in databse
+
   }
 
 }

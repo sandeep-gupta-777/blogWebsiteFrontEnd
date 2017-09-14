@@ -45,7 +45,7 @@ export class CommentComponent implements OnInit {
 
         this.comment.commentChild_idArray = [''];
         this.comment.commentDate = new Date;
-        this.comment.commentLikeCount = 0;
+        this.comment.commentLikes = ["sdasdsa"];
 
         console.log('saving comment');
         console.log(this.comment);
@@ -79,7 +79,7 @@ export class CommentComponent implements OnInit {
 
       this.replyComment.commentChild_idArray = [''];
     this.replyComment.commentDate = new Date;
-    this.replyComment.commentLikeCount = 0;
+    this.replyComment.commentLikes= ["asddad"];
 
     console.log('saving reply');
     console.log(this.replyComment);
@@ -130,7 +130,7 @@ export class CommentComponent implements OnInit {
 
           commentChild_idArray: ['not set'],
           commentDate: new Date,
-          commentLikeCount: -1
+          commentLikes: ["dasdsa"]
         };
 
     }

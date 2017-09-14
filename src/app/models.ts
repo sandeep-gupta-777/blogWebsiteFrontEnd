@@ -43,7 +43,7 @@ export interface BlogPost{
   blogAuthor_fullName?:string,
   blogCreationDate:Date,
   blogLastUpdatedDate?:Date,
-  blogLikes?:number,
+  blogLikes?:[String],
   blogViews?:number,
   blogComments?:string[],
   blogTags?:[String],
@@ -78,6 +78,6 @@ export interface BlogComment{
 
 
   commentDate?: Date,
-  commentLikeCount?: number
+  commentLikes?: [String]
 
 }

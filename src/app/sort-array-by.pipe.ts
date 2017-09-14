@@ -7,8 +7,7 @@ export class SortArrayByPipe implements PipeTransform {
 
 
   transform(array: any, property1, property2): any {
-    console.log(property1);
-    console.log(property2);
+    console.log('pipe is sorting');
     // let property2=  '-blogCreationDate';
     array = array.sort(this.dynamicSort(property1));
     if(property2)

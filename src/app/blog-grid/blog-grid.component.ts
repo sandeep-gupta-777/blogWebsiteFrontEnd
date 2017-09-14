@@ -4,6 +4,7 @@ import {Shared} from "../shared.service";
 import {Helper} from "../helper.service";
 import {Global} from "../Global.service";
 import {Router} from "@angular/router";
+import {isUndefined} from "util";
 
 @Component({
   selector: 'app-blog-grid',
@@ -36,6 +37,7 @@ export class BlogGridComponent implements OnInit {
 
   showSidePanel = false;
   showLoadingIcon= false;
+  showTimeoutError= false;
 
   searchQuery;
   showLoadMore = true;
@@ -47,32 +49,24 @@ export class BlogGridComponent implements OnInit {
   private loadMoreImagesSubscription;
   private loadMoreResultsSubscription;
   private notifyKeywordChangeEventSubscription;
+  previouslyLoadedResultCount=0;
+  newResultsToBeLoadedCount = 1;//TODO: make it a global variable
   private subscriptionPost;
-  @Input() imageContainers: ImageContainer[]  = null;
-  @Input() resultsArray: BlogPost[]  = null;
+  resultsArray: BlogPost[];
   searchQueryTImeStamp;
   constructor(private sharedService: Shared, private helper:Helper, private global:Global, private router: Router) {
   }
+  test(){
+    console.log(this.resultsArray);
+    return this.resultsArray;
+  }
 
-  // isUserAlsoOwnerOfThisImage(imageAuthor_id){
-  //   //TODO: this method is called by 4 time, debug it
-  //   let temp = this.global.getLoggedInUserDetails();
-  //   if(!temp) return false;
-  //   console.log(' in isUserAlsoOwnerOfThisImage');
-  //   return imageAuthor_id ===this.global.getLoggedInUserDetails()._id;
-  // }
   isUserAlsoOwnerOfThisBlogPost(imageAuthor_id){
     //TODO: this method is called by 4 time, debug it
     let temp = this.global.getLoggedInUserDetails();
     if(!temp) return false;
     return imageAuthor_id ===this.global.getLoggedInUserDetails()._id;
   }
-
-
-  // sortImageContainerArrayBy(property){
-  //   this.sortbyPropery = property;
-  //   this.imageContainers = this.imageContainers.sort(this.dynamicSort(property));
-  // }
   sortResultsArrayBy(property){
     this.sortbyPropery = property;
     this.resultsArray = this.resultsArray.sort(this.dynamicSort(property));
@@ -89,51 +83,37 @@ export class BlogGridComponent implements OnInit {
     }
   }
 
+  timeOutRef;
+
+  showTimeOutErrorIfNeeded(){
+    this.timeOutRef = setTimeout(()=>{
+      this.showTimeoutError = true;
+      this.loadMoreResultsSubscription.unsubscribe();
+    },10000);
+  }
+
   loadMore(){
     /*perform search for a given query but skip all the images which have already been loaded*/
     /*if the newly loaded image count is less than the demanded => means there are no more such imagges
      * therefore, its safe to disable load more button
      * */
-    let previouslyLoadedImagesCount,newImagesToBeLoadedCount = 40;
 
-    let previouslyLoadedResultCount,newResultsToBeLoadedCount = 1;
-    previouslyLoadedImagesCount = this.resultsArray.length;
-
+    let previouslyLoadedResultCount=0,newResultsToBeLoadedCount = 1;
+    console.log('load more clicked');
     this.showLoadingIcon = true;
-    // this.loadMoreImagesSubscription =  this.helper.loadMoreImages(this.searchQuery,previouslyLoadedImagesCount,newImagesToBeLoadedCount )
-    //   .subscribe(value=>{
-    //     this.showLoadingIcon = false;
-    //     console.log(value);
-    //     value.length<10?this.showLoadMore=false:this.showLoadMore=true;
-    //     this.imageContainers = this.imageContainers.concat(value);
-    //     this.sortImageContainerArrayBy(this.sortbyPropery);
-    //
-    //   });
-    this.loadMoreResultsSubscription =  this.helper.loadMoreResults(this.searchQuery,previouslyLoadedResultCount,newResultsToBeLoadedCount )
+    this.showTimeOutErrorIfNeeded();
+    this.loadMoreResultsSubscription =  this.helper.loadMoreResults(this.searchQuery,this.previouslyLoadedResultCount,this.newResultsToBeLoadedCount )
       //will trigger /loadMoreResults in backend
       .subscribe(value=>{
+        clearInterval(this.timeOutRef);
         this.showLoadingIcon = false;
-        value.length<1?this.showLoadMore=false:this.showLoadMore=true;//TODO: change 1 to  10
-        debugger;
-        // this.imageContainers = this.imageContainers.concat(value);
+        value.length<newResultsToBeLoadedCount?this.showLoadMore=false:this.showLoadMore=true;//TODO: change 1 to  10
         this.resultsArray = this.resultsArray.concat(value);
-        // this.sortImageContainerArrayBy(this.sortbyPropery);
-        this.sortResultsArrayBy(this.sortbyPropery);
+        this.previouslyLoadedResultCount = this.resultsArray.length ;
+        // this.sortResultsArrayBy(this.sortbyPropery); we are not sorting....we should recieve sorted queries
       });
 
   }
-
-  // openSideImagePanel(imageContainer){
-  //   console.log(imageContainer);
-  //   this.showSidePanel = true;
-  //   setTimeout(()=>{
-  //     /*why this is needed?
-  //      we want below code to execute AFTER component is finished loading; this.showSidePanel = true will start the loading
-  //      putting in set time out will make the code ASYNC*/
-  //     this.sharedService.getImageContainers.emit(imageContainer);
-  //   }, 0);
-  // }
-
   openBlogDisplayPage(blogPost:BlogPost){
 
     this.global.previousSRPURL = window.location.pathname;
@@ -150,34 +130,14 @@ export class BlogGridComponent implements OnInit {
   }
 
 
-  //need to change
-  //on clicking like
-  // increaseVoteCount(imageId) {
-  //   console.log('hello');
-  //   let imageContainer : ImageContainer = this.helper.findImageContainerByID(this.imageContainers,imageId);
-  //   console.log(imageContainer);
-  //   imageContainer.imageVoteCount++;//this is just for front-end
-  //   let body = {image_id: imageContainer._id, user_id: localStorage.getItem('userID')};
-  //   console.log(imageContainer);
-  //   this.makePostRequestSubscription = this.helper.makePostRequest("increaseVoteCount", body)
-  //     .subscribe(
-  //       data => console.log(data),
-  //       err => console.log(err)
-  //     );
-  // }
-
   ngOnInit() {
 
-    this.resultsArray = this.global.resultsArray || [];
-
-
-
-    this.sharedServiceSubscription = this.sharedService._observable.subscribe((value)=>{
-      // this.imageContainers = value.imageContainers;
+    this.resultsArray = this.global.resultsArray;
+  this.sharedServiceSubscription = this.sharedService._observable.subscribe((value)=>{
     });
 
     //need to change
-    // this.triggerGetResultsEventSubscription = this.helper.triggerIconGridComponentGetImagesEvent.subscribe(({url,requestType, searchQuery})=>{
+    //TODO: check if this can be moved to helper function
     this.triggerGetResultsEventSubscription = this.helper.getResultEvent.subscribe(({url,requestType, searchQuery})=>{
       console.log("frontend: " + searchQuery);
       this.searchQueryTImeStamp = Date.now(); //at this time search is performed
