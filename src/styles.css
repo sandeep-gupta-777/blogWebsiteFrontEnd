@@ -15,7 +15,7 @@ body{
   /*background-image: url('http://www.designbolts.com/wp-content/uploads/2012/11/Free-black-leather-seamless-photoshop-pattern-free-download.jpg');*/
   /*background-color: rgba(0, 0, 0, 0.92);*/
   background-size: contain;
-  background-color: #f7f7f7;
+  background-color: rgba(0, 0, 0, 0.89);
   /*this is to keep footer at at bottom*/
   height: 100%;
 }

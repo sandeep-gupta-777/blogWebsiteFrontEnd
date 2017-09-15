@@ -26,14 +26,14 @@ export class ThreadComponent implements OnInit {
 
   }
 
-    updateThreadEvent(comment:BlogComment){
+  updateThreadEvent(comment: BlogComment) {
     console.log('pushing following comment');
     console.log(comment);
     this.commentArray.unshift(comment);
     console.log(this.commentArray);
     this.showAddCommentBox = false;
     this.ref.detectChanges();
-    }
+  }
 
   commentArray: BlogComment[] = [
     // {
@@ -73,6 +73,7 @@ export class ThreadComponent implements OnInit {
         console.log(value);
         this.commentArray = value;
         this.global.blogCommentsArray = this.commentArray;
+        console.log(this.global.blogCommentsArray);
       }
     );
 

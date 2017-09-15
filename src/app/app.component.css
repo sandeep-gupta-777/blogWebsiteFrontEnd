@@ -20,3 +20,7 @@
   /*display: block;*/
   /*border: 5px solid white;*/
 /*}*/
+
+.border{
+  border: 1px solid red;
+}

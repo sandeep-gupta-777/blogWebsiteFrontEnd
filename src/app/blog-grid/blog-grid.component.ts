@@ -53,6 +53,7 @@ export class BlogGridComponent implements OnInit {
   newResultsToBeLoadedCount = 1;//TODO: make it a global variable
   private subscriptionPost;
   resultsArray: BlogPost[];
+  loadingArray = [1,2];
   searchQueryTImeStamp;
   constructor(private sharedService: Shared, private helper:Helper, private global:Global, private router: Router) {
   }

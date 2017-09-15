@@ -37,3 +37,6 @@
   display: flex;
   align-items: center;
 }
+.linkCursor{
+  cursor: pointer;
+}

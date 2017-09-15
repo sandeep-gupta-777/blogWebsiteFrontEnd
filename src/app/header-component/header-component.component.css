@@ -1,15 +1,19 @@
 
 .border{
-  /*border: solid 1px red;*/
+  border: solid 2px red;
 }
 /*======================*/
 .center-vertical{
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
 }
 .center-horizontal{
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
 }
 
 .white-border{
@@ -32,4 +36,20 @@
 
 .card1:hover {
   box-shadow: 0 8px 8px 0 rgba(0,0,0,0.2);
+}
+.whiteText{
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+.whiteText:hover{
+  background-color: rgba(0, 0, 0, 0.39);
+  color: white;
+  font-size: 18px;
+}
+
+a{
+  text-decoration: none;
+  color: white;
 }

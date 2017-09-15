@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BlogComment} from "../models";
 import {Helper} from "../helper.service";
+import {Global} from "../Global.service";
 
 @Component({
   selector: 'app-comment',
@@ -15,6 +16,7 @@ export class CommentComponent implements OnInit {
   @Input() parentRankCode;
   @Input() commentBlog_id;
   @Input() isItANewComment=false;
+  @Input() totalCommentCountInCurrentBlog;
 
   @Output() changeCommentThreadEvent = new EventEmitter();
   showReplyBox = false;
@@ -49,12 +51,13 @@ export class CommentComponent implements OnInit {
 
         console.log('saving comment');
         console.log(this.comment);
-      this.helper.makePostRequest('users/saveComment', this.comment).subscribe(value=>{
+      console.log(this.global.blogCommentsArray);
+
+      this.helper.makePostRequest('users/saveComment', {comment: this.comment,totalCommentCountInCurrentBlog:1 + this.global.blogCommentsArray.length}).subscribe(value=>{
         console.log(value);
         if(this.isItANewComment){
           this.changeCommentThreadEvent.emit(this.comment);
           this.editedCommentText = "";
-
         }
       });
       this.showEditBox = !this.showEditBox;
@@ -109,8 +112,8 @@ export class CommentComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log('comment init');
-    console.log(this.commentBlog_id);
+    console.log(this.global.blogCommentsArray);
+
     if (this.comment)
       this.editedCommentText = this.comment.commentText;
     else {
@@ -132,12 +135,11 @@ export class CommentComponent implements OnInit {
           commentDate: new Date,
           commentLikes: ["dasdsa"]
         };
-
     }
 
   }
 
-  constructor(private helper: Helper) {
+  constructor(private helper: Helper, private global:Global) {
 
   }
 k(){

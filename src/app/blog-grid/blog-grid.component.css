@@ -18,7 +18,7 @@
 }
 
 .border{
-  border: solid red 1px;
+  /*border: solid red 1px;*/
 }
 
 .blackBackgroud{
@@ -44,4 +44,12 @@
 .card1:hover {
   box-shadow: 0 8px 8px 0 rgba(0,0,0,0.2);
 }
+
+.loadingBackgroundColorLight{
+  background-color:#eef3f6;
+}
+.loadingBackgroundColorLight{
+  background-color:#eef3f6;
+}
+
 

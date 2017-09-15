@@ -57,8 +57,8 @@
       </div>
     </div>
     <!--Like button stars -->
-    <div class="vertical-center col-xs-1 " style="background-color: black;color: red; height: 30px">
-      <i class="fa fa-heart pull-right" (click)="toggleLike()"></i> <span> 22</span>
+    <div class="vertical-center col-xs-1 linkCursor" style="background-color: black;color: red; height: 30px">
+      <i class="fa fa-heart pull-right " (click)="toggleLike()"></i> <span> {{blogPost && blogPost.blogLikes.length}}</span>
     </div>
     <!--Like button ends -->
   </div>

@@ -17,12 +17,15 @@ export class BlogDisplayComponent implements OnInit {
 
     if (this.getClickedBlogPostSubscription)
       this.getClickedBlogPostSubscription.unsubscribe();
+    if (this.makePostRequestSubscription)
+      this.makePostRequestSubscription.unsubscribe();
   }
 
   editMode = false;
 
   // private getImageContainersSubscription;
-  private getClickedBlogPostSubscription;
+  getClickedBlogPostSubscription;
+  makePostRequestSubscription;
   imageContainer: ImageContainer = {//TODO: try using async pipe, instead of initializing like this
     imageId: 'not set',
     imageName: 'not set',
@@ -140,6 +143,7 @@ export class BlogDisplayComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('ngoninit of blog-display.component.ts');
+    console.log(this.blogPost);
 
      this._id = this.route.snapshot.params['id'];
 
@@ -173,14 +177,31 @@ export class BlogDisplayComponent implements OnInit {
     * toggle users id is found in that array
     * */
     let user_id = this.global.getLoggedInUserDetails()._id;
-    let indexOfUserIDInLikedArry = this.blogPost.blogLikes.indexOf(user_id);
+    let operation;
+    let indexOfUserIDInLikedArry;
+    if(this.blogPost.blogLikes)
+    {
+      indexOfUserIDInLikedArry = this.blogPost.blogLikes.indexOf(user_id);
+
+    }
+    else {
+      this.blogPost.blogLikes = ['asdasd'];
+    }
     if(indexOfUserIDInLikedArry===-1){
       this.blogPost.blogLikes.push(user_id);
+      operation = "push";
     }
     else {
       this.blogPost.blogLikes.splice(indexOfUserIDInLikedArry,1);
+      operation = "pull";
     }
     //TODO: save in databse
+    let body = {blogPost_id: this.blogPost._id, user_id: user_id, operation:operation};
+    this.makePostRequestSubscription = this.helper.makePostRequest("toggleLike", body)
+      .subscribe(
+        data => console.log(data),
+        err => console.log(err)
+      );
 
   }
 

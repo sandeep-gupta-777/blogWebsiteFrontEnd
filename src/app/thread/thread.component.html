@@ -1,8 +1,9 @@
+
 <div class="container">
   <div class="row ">
 
     <div class="col-xs-12">
-      <h1 class="horizontal-center">Comments</h1>
+      <h1 class="horizontal-center whiteText">Comments</h1>
     </div>
 
     <div class="col-xs-12 border">
@@ -18,6 +19,7 @@
     <div class="col-xs-12 border">
 
       <app-comment *ngFor="let comment of commentArray|sortArrayBy:'commentRankCode' :'-commentDate'" (changeCommentThreadEvent)="updateThreadEvent($event)"
+                   [totalCommentCountInCurrentBlog]="commentArray.length"
                    [comment]="comment" [commentBlog_id]="commentBlog_id"></app-comment>
 
     </div>

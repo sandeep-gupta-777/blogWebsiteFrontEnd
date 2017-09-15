@@ -1,18 +1,16 @@
-
-<app-header-component ></app-header-component>
+<div  style="width: 16%;position: fixed;z-index: 1">
+  <app-header-component ></app-header-component>
+</div>
 <!--style is to keep footer at at bottom-->
-<div class="wrapper" style="min-height:70%; border: 1px solid red">
+<div class="wrapper" style="min-height:70%;z-index: 100 ">
   <!--<app-sidebar></app-sidebar>-->
   <!--<app-image-side-panel style="position: fixed;"></app-image-side-panel>-->
   <router-outlet></router-outlet>
   <!--<app-blog-display></app-blog-display>-->
   <!--<app-image-modal></app-image-modal>-->
   <!--<app-thread class="border1"></app-thread>-->
-  <br>
 </div>
-<div id="footer">
-  <app-footer-component ></app-footer-component>
-</div>
+  <!--<app-footer-component ></app-footer-component>-->
 <!--<app-admin></app-admin>-->
 
 

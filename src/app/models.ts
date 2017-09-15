@@ -46,6 +46,7 @@ export interface BlogPost{
   blogLikes?:[String],
   blogViews?:number,
   blogComments?:string[],
+  blogCommentsCount:number,
   blogTags?:[String],
   blogRelevency?:number,
   blogImageURL?: String
