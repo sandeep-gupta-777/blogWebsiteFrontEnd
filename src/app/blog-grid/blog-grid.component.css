@@ -18,7 +18,7 @@
 }
 
 .border{
-  /*border: solid red 1px;*/
+  border: solid red 1px;
 }
 
 .blackBackgroud{
@@ -52,4 +52,8 @@
   background-color:#eef3f6;
 }
 
+
+#searchT:focus{
+  outline: none;
+}
 

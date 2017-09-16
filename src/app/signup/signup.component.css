@@ -19,17 +19,6 @@
   color: white;
 }
 
-@media (max-width: 768px) {
-  .container{
-    width: 90%;
-  }
-}
-@media (min-width: 768px) {
-  .container{
-    width: 35%;
-  }
-}
-
 input.ng-invalid.ng-touched {
   border: 2px solid red;
   /*background-color: red;*/

@@ -1,6 +1,13 @@
-<div class="container border" style="min-height: 70vh; overflow: auto;">
+<div class="container" style="border-bottom: solid 1px white;">
+  <!--<div style="color:white;font-size: 60px; "><i class="fa fa-search-plus" style="margin-right: 1%"></i>Search Results</div>-->
+  <input id="searchT" [ngModel]="searchQuery" (ngModelChange)="debounce($event,200)"
+         placeholder="Search..." autofocus type="search" style="width: 100%; height: 80px;background: transparent; border: hidden;font-size: 60px; color: white;">
+  </div>
+<br><br>
+
+<div class="container" style="min-height: 70vh; overflow: auto;">
   <br>
-  <div class="container" style="width: 80%" >
+  <div class="container" style="width: 95%" >
 
   <div class="row">
     <div class="col-xs-12 ">
@@ -126,7 +133,7 @@
 
   <br><br>
 
-  <div class="row" style="margin-bottom: 10px">
+  <div class="row whiteText" style="margin-bottom: 10px;">
     <div class="col-xs-12 horizontal-center" *ngIf=" resultsArray && resultsArray.length===0 && !showLoadingIcon">
       <h1>No Results</h1>
     </div>

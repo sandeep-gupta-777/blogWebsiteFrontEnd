@@ -1,14 +1,22 @@
-<br>
+<div class="container" style="border-bottom: solid 1px white">
+  <div style="color:white;font-size: 60px; "><i class="fa fa-dashboard" style="margin-right: 1%"></i>Dashboard</div>
+</div>
+
+
+<br><br>
 <!--tabs begin-->
-<div class="container" >
-  <div class="container">
+<div class="container">
     <ul class="nav nav-tabs">
-      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"  [ngClass]="{'active':highlightTab==='Write'}" (click)="uploadBoxOpen=true;highlightTab='Write'" #upload><a routerLink="/dashboard" >Write</a></li>
-      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [ngClass]="{'active':highlightTab==='My Blogs'}" (click)="getUsersBlogs()" #MyImages><a routerLink="writtenBlogs">My Blogs</a></li>
-      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [ngClass]="{'active':highlightTab==='Liked'}" (click)="getAllLikedBlogs()" #Liked><a routerLink="likedBlogs">Liked</a></li>
+      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"  [ngClass]="{'active':highlightTab==='Write'}"
+          (click)="uploadBoxOpen=true;highlightTab='Write'" #upload><a routerLink="/dashboard" >Write</a></li>
+      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [ngClass]="{'active':highlightTab==='My Blogs'}"
+          (click)="getUsersBlogs()" #MyImages><a routerLink="writtenBlogs" fragment="stay">My Blogs</a></li>
+      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [ngClass]="{'active':highlightTab==='Liked'}"
+          (click)="getAllLikedBlogs()" #Liked><a routerLink="likedBlogs" fragment="stay">Liked</a></li>
+      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [ngClass]="{'active':highlightTab==='drafts'}"
+          (click)="getAllLikedBlogs()" #Liked><a routerLink="likedBlogs" fragment="stay">Drafts</a></li>
     </ul>
     <br>
-  </div>
 </div>
 <!--tabs end-->
 

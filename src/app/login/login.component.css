@@ -37,9 +37,9 @@
 /*}*/
 
 
-/*.border{*/
-  /*border: 1px solid white;*/
-/*}*/
+.border{
+  border: 1px solid white;
+}
 
 .vertical-center{
   display: flex;
@@ -56,15 +56,3 @@
 .whiteText{
   color: white;
 }
-
-@media (max-width: 768px) {
-  .container{
-    width: 90%;
-  }
-}
-@media (min-width: 768px) {
-  .container{
-    width: 35%;
-  }
-}
-

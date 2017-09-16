@@ -24,3 +24,8 @@
 .border{
   border: 1px solid red;
 }
+
+.nopadding {
+  padding: 0 !important;
+  margin: 0 !important;
+}

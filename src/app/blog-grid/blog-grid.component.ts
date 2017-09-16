@@ -3,7 +3,7 @@ import {BlogPost, ImageContainer} from "../models";
 import {Shared} from "../shared.service";
 import {Helper} from "../helper.service";
 import {Global} from "../Global.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {isUndefined} from "util";
 
 @Component({
@@ -30,6 +30,32 @@ export class BlogGridComponent implements OnInit {
     if(this.notifyKeywordChangeEventSubscription)
       this.notifyKeywordChangeEventSubscription.unsubscribe();
   }
+  lastCall;
+  debounce(args,interval=200) {//TODO: shift this to helper class
+    //https://stackoverflow.com/questions/18177174/how-to-limit-handling-of-event-to-once-per-x-seconds-with-jquery-javascript
+    // let interval = 200;//100ms
+    clearTimeout(this.lastCall);
+    this.lastCall = setTimeout(() => {
+      this.triggerAllResultsObservable(args);
+    }, interval);
+  }
+
+  triggerAllResultsObservable(newValue?:string){
+    //navigate to http://localhost:4200/icons page is not already navigated
+    if(this.router.url !== "/"+this.global._backendRoute_AllResults)//these are frontend routes but with same value
+      this.router.navigate(["/"+ this.global._backendRoute_AllResults]);
+    if (!isUndefined(newValue)) {
+      this.searchQuery = newValue;
+      this.global.setSearchQuery(newValue);
+    }
+    this.helper.notifyKeywordChangeEvent.emit(newValue);
+
+    setTimeout(()=>{
+      this.helper.triggergetResultEvent(this.global._backendRoute_AllResults,'POST',  this.global.getSearchQuery());
+
+    }, 0);
+    // this.helper.triggerIconGridComponentGetImages('AllIcons','POST',  newValue);
+  }
 
 
 
@@ -55,7 +81,7 @@ export class BlogGridComponent implements OnInit {
   resultsArray: BlogPost[];
   loadingArray = [1,2];
   searchQueryTImeStamp;
-  constructor(private sharedService: Shared, private helper:Helper, private global:Global, private router: Router) {
+  constructor(private sharedService: Shared, private helper:Helper, private global:Global, private router: Router, private activatedRoute:ActivatedRoute) {
   }
   test(){
     console.log(this.resultsArray);
@@ -127,7 +153,6 @@ export class BlogGridComponent implements OnInit {
       this.sharedService.getClickedBlogPost.emit(blogPost);
     }, 0);
 
-
   }
 
 
@@ -140,10 +165,15 @@ export class BlogGridComponent implements OnInit {
     //need to change
     //TODO: check if this can be moved to helper function
     this.triggerGetResultsEventSubscription = this.helper.getResultEvent.subscribe(({url,requestType, searchQuery})=>{
-      console.log("frontend: " + searchQuery);
       this.searchQueryTImeStamp = Date.now(); //at this time search is performed
       let user_id = localStorage.getItem('userID');
       this.showLoadingIcon=true;
+
+      //change the url accordingly, but not if blog-grid.component.ts is child component
+      let tempUrl = window.location.href;
+      if(tempUrl.indexOf('#stay')===-1)//TODO: change this to something more robust
+      this.router.navigate(['allresults'],{queryParams:{query:searchQuery}});
+
       if(requestType==='POST')
       {
         if(!searchQuery) searchQuery ="";
@@ -165,7 +195,6 @@ export class BlogGridComponent implements OnInit {
             value.length<1?this.showLoadMore=false:this.showLoadMore=true;//TODO: change 1 to 10
 
             this.global.resultsArray = value;
-
           },
           //
           (error)=>{

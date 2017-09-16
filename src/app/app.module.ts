@@ -61,7 +61,7 @@ const appRoutes: Routes = [
   {component: BlogDisplayComponent, path: 'blogdisplay/:id'},
   {component: TextEditorInterfaceComponent, path: 'blogEdit'},
   {component: TextEditorInterfaceComponent, path: 'blogEdit/:id'},
-  {component: HomeScreenComponent, path: ''},
+  {component: BlogGridComponent, path: ''},
   { path: '404', component: NotFoundComponent }
   // { path: '**', redirectTo: '404' }
 ];

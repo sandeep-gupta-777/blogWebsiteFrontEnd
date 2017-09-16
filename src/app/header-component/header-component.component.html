@@ -121,40 +121,28 @@
 <!--<span class='searchQuery'>cat</span> <span class='searchQuery'>pic</span>-->
 
 
-<div class="container pull-left " style="width: 100%; height: 100vh;background-color: black;">
+<div class="container-fluid" style=" height: 100vh;width:32vh;background-color: black;">
   <div class="row center-vertical" style="height: 20%;">
     <!--logo starts here-->
     <div class="col-xs-12 ">
-      <a routerLink="/allresults"><img class="img-responsive" src="./assets/logo1.png "></a>
+      <a [routerLink]="['/allresults']" [queryParams]="{query:''}" ><img class="img-responsive" src="./assets/logo1.png "></a>
+      <!--<a routerLink="/allresults"><img class="img-responsive" src="./assets/Logo.png "></a>-->
     </div>
     <!--logo ends here-->
   </div>
 
-  <div class="row whiteText" style="display: flex; align-items: center ;justify-content: center">
+  <div class="row whiteText" (click)="triggerAllResultsObservable('')"
+       style="display: flex; align-items: center ;justify-content: center">
     <div style="background-color: #ff4f12; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;">
       <i class="fa fa-home"></i></div>
-    <div style="width: 95%;padding-left: 5%"><a routerLink="/allresults">Home</a></div>
+    <div style="width: 95%;padding-left: 5%"><a [routerLink]="['/allresults']" [queryParams]="{query:''}">Home</a></div>
   </div>
   <br><br>
-  <div class="row whiteText" style="display: flex; align-items: center ;justify-content: center">
+  <div class="row whiteText"  *ngFor="let result of [{query:'Angular'},{query:'NodeJS'},{query:'MongoDB'},{query:'HTML CSS'},{query:'Cat memes'}]"
+       (click)="triggerAllResultsObservable(result.query)"
+       style="display: flex; align-items: center ;justify-content: center" [ngClass]="{'active':searchQuery===result.query}">
     <div style="background-color: green; width: 5%;height: 40px;"></div>
-    <div style="width: 95%;padding-left: 5%">Angular4</div>
-  </div>
-  <div class="row whiteText" style="display: flex; align-items: center ;justify-content: center">
-    <div style="background-color: green; width: 5%;height: 40px;"></div>
-    <div style="width: 95%;padding-left: 5%">NodeJS</div>
-  </div>
-  <div class="row whiteText" style="display: flex; align-items: center ;justify-content: center">
-    <div style="background-color: green; width: 5%;height: 40px;"></div>
-    <div style="width: 95%;padding-left: 5%">Angular4</div>
-  </div>
-  <div class="row whiteText" style="display: flex; align-items: center ;justify-content: center">
-    <div style="background-color: green; width: 5%;height: 40px;"></div>
-    <div style="width: 95%;padding-left: 5%">Angular4</div>
-  </div>
-  <div class="row whiteText" style="display: flex; align-items: center ;justify-content: center">
-    <div style="background-color: green; width: 5%;height: 40px;"></div>
-    <div style="width: 95%;padding-left: 5%">Angular4</div>
+    <div style="width: 95%;padding-left: 5%"><a [routerLink]="['/allresults']" [queryParams]="{query:result.query}">{{result.query}}</a></div>
   </div>
 
   <br><br><br><br>
@@ -165,17 +153,32 @@
         <div class="input-group">
           <input type="text"
                  [ngModel]="searchQuery" (ngModelChange)="debounce($event,200)"
-                 class="form-control" placeholder="Search..." aria-describedby="basic-addon2">
-          <span class="input-group-addon" id="basic-addon2"><i class="fa fa-search"> </i></span>
+                 class="form-control" placeholder="Search..." aria-describedby="basic-addon2"
+                style="background: transparent; color: white"
+          >
+          <span style="background: transparent;" class="input-group-addon" id="basic-addon2"><i class="fa fa-search" style="color: white"> </i></span>
         </div>
       </div>
     </div>
   </div>
   <!--search ends-->
 
-  <div class="row whiteText" style="display: flex; align-items: center ;justify-content: center">
+  <div class="row whiteText"  style="display: flex; align-items: center ;justify-content: center">
     <div style="background-color: blue; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;"><i class="fa fa-user"></i></div>
     <div style="width: 85%;padding-left: 5%"><a routerLink="login">Sign up or Login</a></div>
+  </div>
+  <div class="row whiteText" style="display: flex; align-items: center ;justify-content: center">
+    <div style="background-color: blue; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;"><i class="fa fa-dashboard"></i></div>
+    <div style="width: 85%;padding-left: 5%"><a routerLink="dashboard">Dashboard</a></div>
+  </div>
+  <div class="row whiteText" style="display: flex; align-items: center ;justify-content: center">
+    <div style="background-color: blue; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;"><i class="fa fa-comment"></i></div>
+    <div style="width: 85%;padding-left: 5%"><a routerLink="public">Public discussion thread</a></div>
+  </div>
+
+  <div class="row whiteText" style="display: flex; align-items: center ;justify-content: center">
+    <div style="background-color: blue; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;"><i class="fa fa-plus"></i></div>
+    <div style="width: 85%;padding-left: 5%"><a routerLink="public">Create new thread</a></div>
   </div>
 
 

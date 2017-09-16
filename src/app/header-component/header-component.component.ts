@@ -89,6 +89,8 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
   }
 
 
+
+
   ngOnInit() {
     this.helper.setLoggedInUserDetailsEvent.subscribe(
       (value) => {
@@ -97,6 +99,7 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
      this.helper.setKeywordIntoSearchBarEvent.subscribe(
        (keyword)=> {this.searchQuery=keyword}
      );
+
 
 
     this.router.events
@@ -129,13 +132,15 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
             this.helper.triggergetResultEvent('users/writtenBlogs','POST');
           },0);
         }
-        else if(currentURL==='/allresults' && !this.global.resultsArray){
-          setTimeout(()=>{//may not be needed
-            if(!this.global.resultsArray)
-            this.helper.triggerIconGridComponentGetImages(this.global._backendRoute_AllResults,'POST');
-          },0);
+        else if(currentURL.indexOf('/allresults')>-1) {
+          this.searchQuery =  this.activatedRoute.snapshot.queryParams.query || "";
+
+          setTimeout(() => {//may not be needed
+              this.helper.triggergetResultEvent(this.global._backendRoute_AllResults, 'POST', this.searchQuery);
+          }, 0);
         }
       });
+
 
   }
 }

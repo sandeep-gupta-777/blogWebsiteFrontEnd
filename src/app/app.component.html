@@ -1,18 +1,39 @@
-<div  style="width: 16%;position: fixed;z-index: 1">
-  <app-header-component ></app-header-component>
-</div>
-<!--style is to keep footer at at bottom-->
-<div class="wrapper" style="min-height:70%;z-index: 100 ">
-  <!--<app-sidebar></app-sidebar>-->
-  <!--<app-image-side-panel style="position: fixed;"></app-image-side-panel>-->
-  <router-outlet></router-outlet>
-  <!--<app-blog-display></app-blog-display>-->
-  <!--<app-image-modal></app-image-modal>-->
-  <!--<app-thread class="border1"></app-thread>-->
-</div>
-  <!--<app-footer-component ></app-footer-component>-->
-<!--<app-admin></app-admin>-->
+<div class="container-fluid">
+  <div class="row ">
+    <div class="col-xs-2 nopadding">
+      <div style="position: fixed">
+        <app-header-component></app-header-component>
+      </div>
+    </div>
+    <!--<div class="col-xs-2">-->
+    <!--&lt;!&ndash;<app-header-component ></app-header-component>&ndash;&gt;-->
+    <!--</div>-->
 
+    <div class="col-xs-8 nopadding ">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!--<div  style="width: 16%;position: fixed;z-index: 1">-->
+<!--&lt;!&ndash;<app-header-component ></app-header-component>&ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash;style is to keep footer at at bottom&ndash;&gt;-->
+<!--<div class="wrapper border" style="min-height:70%;z-index: 100 ">-->
+<!--&lt;!&ndash;<app-sidebar></app-sidebar>&ndash;&gt;-->
+<!--&lt;!&ndash;<app-image-side-panel style="position: fixed;"></app-image-side-panel>&ndash;&gt;-->
+<!--<router-outlet></router-outlet>-->
+<!--&lt;!&ndash;<app-blog-display></app-blog-display>&ndash;&gt;-->
+<!--&lt;!&ndash;<app-image-modal></app-image-modal>&ndash;&gt;-->
+<!--&lt;!&ndash;<app-thread class="border1"></app-thread>&ndash;&gt;-->
+<!--</div>-->
+
+
+<!--<app-footer-component ></app-footer-component>-->
+<!--<app-admin></app-admin>-->
 
 
 <!--<app-thread class="active"></app-thread>-->

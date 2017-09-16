@@ -23,6 +23,12 @@
   }
 }
 
+a {
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}
+
 /*.wrapper{*/
   /*display: flex;*/
   /*flex-direction: column;*/
