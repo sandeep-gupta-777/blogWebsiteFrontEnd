@@ -13,12 +13,23 @@ import {Global} from "./Global.service";
 })
 export class AppComponent implements OnInit{
   blogContent;
+  showMenu = true;
+  isSmallSizeDevice=false;
 
   constructor(private helper:Helper, private global:Global,private ref : ChangeDetectorRef){
 
    }
 
   ngOnInit(){
+
+    if(window.screen.height>768){
+      this.isSmallSizeDevice = false;
+      this.showMenu = true;
+    }
+    else {
+      this.isSmallSizeDevice = true;
+      this.showMenu= false;
+    }
 
     /*if localstorage is not empty fetch the user details and set to Global.service.ts
     this will be required when user refreshes the page*/

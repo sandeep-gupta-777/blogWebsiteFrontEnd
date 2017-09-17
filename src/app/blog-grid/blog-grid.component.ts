@@ -13,6 +13,8 @@ import {isUndefined} from "util";
 })
 export class BlogGridComponent implements OnInit {
 
+  parent;
+
   ngOnDestroy(): void {
 
     if(this.subscriptionGet)
@@ -125,7 +127,7 @@ export class BlogGridComponent implements OnInit {
      * therefore, its safe to disable load more button
      * */
 
-    let previouslyLoadedResultCount=0,newResultsToBeLoadedCount = 1;
+    let previouslyLoadedResultCount=0,newResultsToBeLoadedCount = 10;
     console.log('load more clicked');
     this.showLoadingIcon = true;
     this.showTimeOutErrorIfNeeded();
@@ -157,22 +159,36 @@ export class BlogGridComponent implements OnInit {
 
 
   ngOnInit() {
-
+    // debugger;
+    let tempUrl = window.location.href;
+    if(tempUrl.indexOf('parent=dashboard')>-1)//TODO: change this to something more robust
+    {
+      this.parent='dashaboard';
+      // this.router.navigate(['allresults'],{queryParams:{query:searchQuery}});
+    }
+    else {
+      this.parent=""
+    }
     this.resultsArray = this.global.resultsArray;
   this.sharedServiceSubscription = this.sharedService._observable.subscribe((value)=>{
     });
 
-    //need to change
     //TODO: check if this can be moved to helper function
     this.triggerGetResultsEventSubscription = this.helper.getResultEvent.subscribe(({url,requestType, searchQuery})=>{
+      console.log(searchQuery,'  =================================================');
       this.searchQueryTImeStamp = Date.now(); //at this time search is performed
       let user_id = localStorage.getItem('userID');
       this.showLoadingIcon=true;
 
       //change the url accordingly, but not if blog-grid.component.ts is child component
-      let tempUrl = window.location.href;
-      if(tempUrl.indexOf('#stay')===-1)//TODO: change this to something more robust
-      this.router.navigate(['allresults'],{queryParams:{query:searchQuery}});
+      // debugger;
+      if(tempUrl.indexOf('parent=dashboard')>-1)//TODO: change this to something more robust
+      {
+        this.parent='dashaboard';
+      }else {
+        this.parent='';
+        this.router.navigate(['allresults'],{queryParams:{query:searchQuery}});
+      }
 
       if(requestType==='POST')
       {
@@ -182,6 +198,7 @@ export class BlogGridComponent implements OnInit {
           (value) =>{
 
             if(value.searchQueryTImeStamp< this.searchQueryTImeStamp){
+              console.log(value);
               console.log('old search...discarded');
               return;
             }

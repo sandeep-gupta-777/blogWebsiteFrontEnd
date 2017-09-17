@@ -54,7 +54,8 @@ export class Helper {
     // this.triggerIconGridComponentGetImagesEvent.emit({url,requestType,searchQuery} );
     this.getResultEvent.emit({url,requestType,searchQuery} );
   }
-  triggergetResultEvent(url: string, requestType, searchQuery?){
+  triggergetResultEvent(url: string, requestType, searchQuery?, source?){
+    console.log(source);
     this.getResultEvent.emit({url,requestType,searchQuery} );
   }
 

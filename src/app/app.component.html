@@ -1,7 +1,10 @@
 <div class="container-fluid">
-  <div class="row ">
-    <div class="col-xs-2 nopadding">
-      <div style="position: fixed">
+  <div class="row"  [ngClass]="{'blackBackground':showMenu && isSmallSizeDevice}">
+    <div class="col-xs-12 hidden-lg center-vertical" *ngIf="isSmallSizeDevice" style="height: 40px"  (click)="showMenu = !showMenu">
+      <i class="glyphicon glyphicon-menu-hamburger" style="color: white; font-size: 35px; "></i>
+    </div>
+    <div class="col-xs-12 col-md-2 nopadding">
+      <div style="position: fixed; z-index: 1" *ngIf="showMenu">
         <app-header-component></app-header-component>
       </div>
     </div>
@@ -9,7 +12,7 @@
     <!--&lt;!&ndash;<app-header-component ></app-header-component>&ndash;&gt;-->
     <!--</div>-->
 
-    <div class="col-xs-8 nopadding ">
+    <div class="col-xs-12 col-md-8 nopadding ">
       <router-outlet></router-outlet>
     </div>
 

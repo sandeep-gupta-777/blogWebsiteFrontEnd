@@ -9,12 +9,12 @@ import {Global} from "../Global.service";
 import {Helper} from "../helper.service";
 import {factoryOrValue} from "rxjs/operator/multicast";
 import {Shared} from "../shared.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 declare let tinymce: any;
 @Component({
   selector: 'text-editor',
-  templateUrl: './blog-page.component.html',
+  templateUrl: './blog-edit.component.html',
 })
 export class BlogPageComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
@@ -37,7 +37,7 @@ export class BlogPageComponent implements OnInit, AfterViewInit, OnDestroy, OnCh
   isBlogHTMLDraftDirty:Boolean= false;
 
   constructor(private ref : ChangeDetectorRef, private global:Global, private helper:Helper, private shared:Shared,
-              private route: ActivatedRoute
+              private route: ActivatedRoute,private router:Router
   ) {
   }
 
@@ -227,7 +227,12 @@ export class BlogPageComponent implements OnInit, AfterViewInit, OnDestroy, OnCh
     console.log(this.blogInstance);
       //update on server now
     this.helper.makePostRequest('users/saveBlogPost',this.blogInstance).subscribe(
-      (value)=>{
+      (value:{message:String,_id:String})=>{
+
+        //reload the page and have new ID in URL
+        let _id = value._id;
+        if(!this.blogInstance._id)
+        this.router.navigate(['/blogEdit/'+_id]);
         console.log(value);
         this.showMessageFromServer=true;
         if(shouldUpdateblogHTMLAsWell === false){

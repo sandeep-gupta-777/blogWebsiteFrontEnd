@@ -59,3 +59,17 @@ a{
   color: white;
   font-size: 18px;
 }
+
+/*size dependent css below*/
+
+
+@media (max-width: 768px) {
+  .container-fluid{
+    width: 100%;
+  }
+}
+@media (min-width: 768px) {
+  .container-fluid{
+    width: 32vh;
+  }
+}

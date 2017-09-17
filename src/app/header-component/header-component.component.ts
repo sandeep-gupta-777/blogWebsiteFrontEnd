@@ -18,8 +18,10 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
 
     if (this.routerEventSubscription)
       this.routerEventSubscription.unsubscribe();
+    if (this.changeRouterSubscription)
+      this.changeRouterSubscription.unsubscribe();
   }
-
+  changeRouterSubscription;
   headerFixed: boolean = false;
   private routerEventSubscription;
   public searchQuery:String= null;
@@ -77,7 +79,7 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
     this.helper.notifyKeywordChangeEvent.emit(newValue);
 
     setTimeout(()=>{
-      this.helper.triggergetResultEvent(this.global._backendRoute_AllResults,'POST',  this.global.getSearchQuery());
+      this.helper.triggergetResultEvent(this.global._backendRoute_AllResults,'POST',  this.global.getSearchQuery(),"from header");
 
   }, 0);
     // this.helper.triggerIconGridComponentGetImages('AllIcons','POST',  newValue);
@@ -92,6 +94,7 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
 
 
   ngOnInit() {
+
     this.helper.setLoggedInUserDetailsEvent.subscribe(
       (value) => {
         this.userfirstName = value.fullName.split(" ")[0];
@@ -102,7 +105,7 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
 
 
 
-    this.router.events
+    this.changeRouterSubscription = this.router.events
       .filter(event => (event instanceof NavigationEnd))
       .subscribe((routeData: any) => {
 
@@ -121,7 +124,7 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
         else if(currentURL==='/dashboard/likedBlogs'){
           setTimeout(()=>{//may not be needed
             // this.helper.triggerIconGridComponentGetImages('users/liked_images','POST');
-            this.helper.triggergetResultEvent('users/likedBlogs','POST');
+            this.helper.triggergetResultEvent('users/likedBlogs','POST', 'from header');
 
           },0);
         }
@@ -129,14 +132,15 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
           // alert();
           setTimeout(()=>{//may not be needed
             // this.helper.triggerIconGridComponentGetImages('users/uploaded','POST');
-            this.helper.triggergetResultEvent('users/writtenBlogs','POST');
+            this.helper.triggergetResultEvent('users/writtenBlogs','POST','from header');
           },0);
         }
         else if(currentURL.indexOf('/allresults')>-1) {
           this.searchQuery =  this.activatedRoute.snapshot.queryParams.query || "";
 
           setTimeout(() => {//may not be needed
-              this.helper.triggergetResultEvent(this.global._backendRoute_AllResults, 'POST', this.searchQuery);
+              this.helper.triggergetResultEvent(this.global._backendRoute_AllResults, 'POST', this.searchQuery,'from header');
+            this.changeRouterSubscription.unsubscribe();
           }, 0);
         }
       });

@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit{
   URL = this.global.getbackendURL_heroku();
   highlightTab;
   constructor (private helper: Helper, private sharedService: Shared,private http:Http, private el: ElementRef,private global:Global){
-      this.getUsersImage();
+      // this.getUsersImage();
   }
 
 
@@ -41,9 +41,9 @@ export class DashboardComponent implements OnInit{
       console.log(this.imageContainers);
     })
   }
-  getUsersImage(){
-    this.helper.triggerIconGridComponentGetImages('users/uploaded','POST');
-  }
+  // getUsersImage(){
+  //   this.helper.triggerIconGridComponentGetImages('users/uploaded','POST');
+  // }
   getUsersBlogs(){
     this.helper.triggergetResultEvent('users/writtenBlogs','POST');
     console.log('get user blogs');
@@ -51,13 +51,13 @@ export class DashboardComponent implements OnInit{
   }
 
   //get all liked images by user
-  getAllLikedImages(){
-    this.helper.triggerIconGridComponentGetImages('users/liked_images','POST');
-
-  }
+  // getAllLikedImages(){
+  //   this.helper.triggerIconGridComponentGetImages('users/liked_images','POST','from dashboard');
+  //
+  // }
   //get all liked images by user
   getAllLikedBlogs(){
-    this.helper.triggergetResultEvent('users/likedBlogs','POST');
+    this.helper.triggergetResultEvent('users/likedBlogs','POST','from dashboard');
     this.highlightTab = 'Liked';
 
   }

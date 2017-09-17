@@ -30,7 +30,7 @@
     <!--blog Image starts-->
     <div class="col-xs-12" style="background-color: black" style="margin: 0;padding: 0">
       <!--why margin and padding 0? https://stackoverflow.com/questions/31234817/div-does-not-fill-parent-with-width100-->
-      <img style="width: 100%" src="https://ciphertrick.com/wp-content/uploads/2017/03/featured-1-900x420.jpg">
+      <img style="width: 100%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyDw06sXVJ5KPbNAVXiqij6ACgrTPO64t7-7Rrt0QCn1xycwoJRrrIvIk">
 
     </div>
 

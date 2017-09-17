@@ -121,7 +121,7 @@
 <!--<span class='searchQuery'>cat</span> <span class='searchQuery'>pic</span>-->
 
 
-<div class="container-fluid" style=" height: 100vh;width:32vh;background-color: black;">
+<div class="container-fluid" style=" height: 100vh;background-color: black;overflow-y: auto">
   <div class="row center-vertical" style="height: 20%;">
     <!--logo starts here-->
     <div class="col-xs-12 ">
@@ -131,11 +131,11 @@
     <!--logo ends here-->
   </div>
 
-  <div class="row whiteText" (click)="triggerAllResultsObservable('')"
+  <div class="row whiteText"
        style="display: flex; align-items: center ;justify-content: center">
     <div style="background-color: #ff4f12; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;">
-      <i class="fa fa-home"></i></div>
-    <div style="width: 95%;padding-left: 5%"><a [routerLink]="['/allresults']" [queryParams]="{query:''}">Home</a></div>
+      <i class="fa fa-edit"></i></div>
+    <div style="width: 95%;padding-left: 5%"><a [routerLink]="['/new/blog']" [queryParams]="{query:''}">Create a new blog</a></div>
   </div>
   <br><br>
   <div class="row whiteText"  *ngFor="let result of [{query:'Angular'},{query:'NodeJS'},{query:'MongoDB'},{query:'HTML CSS'},{query:'Cat memes'}]"

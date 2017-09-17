@@ -29,3 +29,11 @@
   padding: 0 !important;
   margin: 0 !important;
 }
+
+.blackBackground{
+  background-color: black;
+}
+.center-vertical{
+  display: flex;
+  align-items: center;
+}

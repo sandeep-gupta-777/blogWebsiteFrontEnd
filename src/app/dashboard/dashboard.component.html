@@ -10,11 +10,11 @@
       <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"  [ngClass]="{'active':highlightTab==='Write'}"
           (click)="uploadBoxOpen=true;highlightTab='Write'" #upload><a routerLink="/dashboard" >Write</a></li>
       <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [ngClass]="{'active':highlightTab==='My Blogs'}"
-          (click)="getUsersBlogs()" #MyImages><a routerLink="writtenBlogs" fragment="stay">My Blogs</a></li>
+          (click)="getUsersBlogs()" #MyImages><a routerLink="writtenBlogs" [queryParams]="{parent:'dashboard'}"> My Blogs</a></li>
       <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [ngClass]="{'active':highlightTab==='Liked'}"
-          (click)="getAllLikedBlogs()" #Liked><a routerLink="likedBlogs" fragment="stay">Liked</a></li>
+          (click)="getAllLikedBlogs()" #Liked><a routerLink="likedBlogs" [queryParams]="{parent:'dashboard'}"> Liked</a></li>
       <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [ngClass]="{'active':highlightTab==='drafts'}"
-          (click)="getAllLikedBlogs()" #Liked><a routerLink="likedBlogs" fragment="stay">Drafts</a></li>
+          (click)="getAllLikedBlogs()" #Liked><a routerLink="likedBlogs" [queryParams]="{parent:'dashboard'}"> Drafts</a></li>
     </ul>
     <br>
 </div>

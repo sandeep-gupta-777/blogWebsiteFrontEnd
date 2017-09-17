@@ -30,7 +30,7 @@ import { AllIconComponent } from './all-icon/all-icon.component';
 import {RlTagInputModule} from "angular2-tag-input/dist";
 import {TagsInputDirective} from './tagsinput/tagsinput.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { BlogPageComponent } from './blog-page/blog-page.component';
+import { BlogPageComponent } from './blog-page/blog-edit.component';
 import { ResultItemComponent } from './result-item/result-item.component';
 import { BlogGridComponent } from './blog-grid/blog-grid.component';
 import { BlogDisplayComponent } from './blog-display/blog-display.component';
@@ -59,6 +59,7 @@ const appRoutes: Routes = [
     ]},
   {component: BlogGridComponent, path: 'allresults'},
   {component: BlogDisplayComponent, path: 'blogdisplay/:id'},
+  {component: TextEditorInterfaceComponent, path: 'new/blog'},
   {component: TextEditorInterfaceComponent, path: 'blogEdit'},
   {component: TextEditorInterfaceComponent, path: 'blogEdit/:id'},
   {component: BlogGridComponent, path: ''},

@@ -8,13 +8,13 @@
   <!--<div class="row border" style="position: relative;margin-left: 0%;">-->
   <!--<div class="row " *ngFor="let comment of commentArray" [ngStyle]="{'margin-left': '10%'}">-->
   <div class="row "  [ngStyle]="{'margin-left': comment.commentLevel*5+ '%'}" style="margin-bottom: .25%">
-    <div class="col-xs-1" style="height: 100%">
+    <div class="col-md-1 hidden-xs" style="height: 100%">
       <img class="img-responsive img-thumbnail" style="width: 50px;"
            [src]="url"
            (error)="setDefaultPic()"
            alt="">
     </div>
-    <div class="col-xs-11 pull-right whiteBackgroud" style="font-weight: bold; padding-top: 1.9%;">
+    <div class="col-md-11 col-xs-12 pull-right whiteBackgroud" style="font-weight: bold; padding-top: 1.9%;">
       <span><b>{{comment.commentAuthor_FullName}}</b></span>
       <span>{{comment.commentDate|date:'medium'}}</span>
       <button class="btn btn-primary btn-sm pull-right" (click)="showReplyBox = !showReplyBox">Reply</button>
@@ -23,7 +23,7 @@
     <!--<div id="triangle-left" style="position: absolute;left: 6.7%;top: 9%"></div>-->
     <!--TODO: apply above triangle-->
 
-    <div class="col-xs-11 pull-right whiteBackgroud ">
+    <div class="col-md-11 col-xs-12 pull-right whiteBackgroud ">
 
       <p *ngIf="!showEditBox">
         {{editedCommentText}}

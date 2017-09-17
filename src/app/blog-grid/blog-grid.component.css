@@ -57,3 +57,30 @@
   outline: none;
 }
 
+@media (min-width: 768px) {
+  .result-title{
+    font-size: 20px;
+  }
+  #searchT{
+    height: 80px;
+    font-size: 60px;
+  }
+  .result-title-snippet-container{
+    min-height: 80px;
+  }
+}
+
+/*phone*/
+@media (max-width: 768px) {
+  .result-title{
+    font-size: 15px;
+  }
+  #searchT{
+    height: 40px;
+    font-size: 30px;
+  }
+  .result-title-snippet-container{
+    min-height: 50px;
+  }
+}
+
