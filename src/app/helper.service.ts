@@ -6,7 +6,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {Http,Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs';
-import {BlogComment, ImageContainer, SiteUser} from "./models";
+import {BlogComment, CriteriaObject, ImageContainer, SiteUser} from "./models";
 import {Global} from "./Global.service";
 // import { Observable } from 'rxjs';
 
@@ -54,9 +54,8 @@ export class Helper {
     // this.triggerIconGridComponentGetImagesEvent.emit({url,requestType,searchQuery} );
     this.getResultEvent.emit({url,requestType,searchQuery} );
   }
-  triggergetResultEvent(url: string, requestType, searchQuery?, source?){
-    console.log(source);
-    this.getResultEvent.emit({url,requestType,searchQuery} );
+  triggergetResultEvent(criteriaObj:CriteriaObject){
+    this.getResultEvent.emit(criteriaObj );
   }
 
 

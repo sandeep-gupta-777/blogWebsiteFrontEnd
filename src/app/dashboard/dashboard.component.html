@@ -14,7 +14,7 @@
       <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [ngClass]="{'active':highlightTab==='Liked'}"
           (click)="getAllLikedBlogs()" #Liked><a routerLink="likedBlogs" [queryParams]="{parent:'dashboard'}"> Liked</a></li>
       <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" [ngClass]="{'active':highlightTab==='drafts'}"
-          (click)="getAllLikedBlogs()" #Liked><a routerLink="likedBlogs" [queryParams]="{parent:'dashboard'}"> Drafts</a></li>
+          (click)="getAllDirtyBlogs()" #Liked><a routerLink="Drafts" [queryParams]="{parent:'dashboard'}"> Drafts</a></li>
     </ul>
     <br>
 </div>

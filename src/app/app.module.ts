@@ -46,13 +46,16 @@ import { TrimStringPipe } from './trim-string.pipe';
 const appRoutes: Routes = [
 
   {component: LoginComponent, path: 'login'},
+  {component: LoginComponent, path: 'login/:nextURL'},
   {component: SidebarComponent, path: 'sidebar'},
   {component: SignupComponent, path: 'signup'},
+  {component: SignupComponent, path: 'signup/:nextURL'},
   {component: IconGridComponent, path: 'icons'},
   {component: BlogGridComponent, path: 'results'},
   {component: HomeScreenComponent, path: 'home'},
   {component: AdminComponent, path: 'admin'},
   {component: DashboardComponent, path: 'dashboard', children: [
+    {component: BlogGridComponent, path: 'Drafts'},
     {component: BlogGridComponent, path: 'likedBlogs'},
     {component: BlogGridComponent, path: 'writtenBlogs'},
     {component: BlogGridComponent, path: 'upload'}

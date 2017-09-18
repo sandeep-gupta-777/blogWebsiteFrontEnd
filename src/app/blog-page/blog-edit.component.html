@@ -57,9 +57,9 @@
       <!--tags begin-->
       <label style="color: white">Tags</label>
       <!--why two inputs instead of one? ITS A PATCH-->
-      <div *ngIf="blogInstance"><input id="tags" [value]="blogInstance?blogInstance.blogTags:'sdsadasdasda'"
+      <div *ngIf="blogInstance"><input id="tags" [value]="blogInstance?blogInstance.blogTags:'All'"
                                        data-role="tagsinput" tagsinput></div>
-      <div *ngIf="!blogInstance"><input id="tags" [value]="blogInstance?blogInstance.blogTags:'sdsadasdasda'"
+      <div *ngIf="!blogInstance"><input id="tags" [value]="blogInstance?blogInstance.blogTags:'All'"
                                         data-role="tagsinput" tagsinput></div>
       <!--tags end-->
     </div>

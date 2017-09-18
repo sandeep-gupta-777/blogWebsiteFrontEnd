@@ -1,11 +1,11 @@
+<br>
+
 <div *ngIf="parent!=='dashaboard'" class="container" style="border-bottom: solid 1px white;">
   <!--<div style="color:white;font-size: 60px; "><i class="fa fa-search-plus" style="margin-right: 1%"></i>Search Results</div>-->
   <input id="searchT" [ngModel]="searchQuery" (ngModelChange)="debounce($event,200)"
          placeholder="Search..." autofocus type="search"
          style="width: 100%; background: transparent; border: hidden;color: white;">
-  <br><br>
 </div>
-{{parent}}
 
 <div class="container" style="min-height: 70vh; overflow: auto;">
   <br>

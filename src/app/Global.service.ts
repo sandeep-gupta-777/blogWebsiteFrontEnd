@@ -1,4 +1,4 @@
-import {BlogComment, BlogPost, SiteUser} from "./models";
+import {BlogComment, BlogPost, CriteriaObject, SiteUser} from "./models";
 export class Global{
   private _loggedInUserDetails:SiteUser;
   private _seachQuery:string;
@@ -12,6 +12,13 @@ export class Global{
 
   public previousSRPURL ;
 
+  // criteriaObject:CriteriaObject={searchQuery:this.getSearchQuery(),requestType:'POST',user_id:this.getLoggedInUserDetails()._id};
+
+  getCriteriaObject():CriteriaObject{
+   let criteriaObject:CriteriaObject={searchQuery:this.getSearchQuery() || '',
+     requestType:'POST',user_id:this.getLoggedInUserDetails()?this.getLoggedInUserDetails()._id :'dont know'};
+    return criteriaObject;
+  }
   getPreviousSRPURL(){
     return this.previousSRPURL;
   }

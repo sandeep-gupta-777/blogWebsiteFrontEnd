@@ -63,9 +63,6 @@ export class ThreadComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
-    console.log('======================================================================================================thread init');
     console.log(this.commentBlog_id);
     //get all the comments for current blog
     this.helper.makePostRequest('blogComments',{commentBlog_id:this.commentBlog_id}).subscribe(

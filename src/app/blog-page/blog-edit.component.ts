@@ -212,7 +212,8 @@ export class BlogPageComponent implements OnInit, AfterViewInit, OnDestroy, OnCh
         blogAuthor_id: this.global.getLoggedInUserDetails()._id,
         blogAuthor_fullName: this.global.getLoggedInUserDetails().fullName,
         blogCreationDate:new Date(),
-        blogLastUpdatedDate:new Date()
+        blogLastUpdatedDate:new Date(),
+        blogIsDirty:true
       };
      else {
        if(shouldUpdateblogHTMLAsWell){
@@ -221,7 +222,8 @@ export class BlogPageComponent implements OnInit, AfterViewInit, OnDestroy, OnCh
         this.blogInstance.blogDraftHTML= this.blogContent;
         this.blogInstance.blogTitle= this.blogTitle;
         this.blogInstance.blogText= this.editor.getContent({format: 'text'});
-        this.blogInstance.blogLastUpdatedDate = new Date()
+        this.blogInstance.blogLastUpdatedDate = new Date();
+        this.blogInstance.blogIsDirty = false;
     }
     this.blogInstance.blogTags =  (<any>$('#tags')).tagsinput('items');
     console.log(this.blogInstance);

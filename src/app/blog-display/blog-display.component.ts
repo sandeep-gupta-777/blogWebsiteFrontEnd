@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, ElementRef, OnInit} from '@angular/core';
-import {BlogPost, ImageContainer} from "../models";
+import {BlogPost, CriteriaObject, ImageContainer} from "../models";
 import {Shared} from "../shared.service";
 import * as jquery from "jquery";
 import {Helper} from "../helper.service";
@@ -51,6 +51,7 @@ export class BlogDisplayComponent implements OnInit {
   };
   blogTitle = "not set";
   _id;
+  criteriaObj:CriteriaObject =this.global.getCriteriaObject();
 
   constructor(private shared: Shared, private el: ElementRef, private helper: Helper, private global: Global, private router: Router,
               private route: ActivatedRoute,private ref : ChangeDetectorRef) {
@@ -81,6 +82,9 @@ export class BlogDisplayComponent implements OnInit {
     this.helper.triggerIconGridComponentGetImages('AllIcons', 'POST', searchQuery);
 
   }
+
+
+
   triggerGetResultEvent(searchQuery) {//TODO: this exact same method is written in header, put it in helper file
     this.helper.notifyKeywordChangeEvent.emit(searchQuery);
     this.helper.setKeywordIntoSearchBarEvent.emit(searchQuery);
@@ -90,9 +94,12 @@ export class BlogDisplayComponent implements OnInit {
       this.router.navigate(["/"+ this.global._backendRoute_AllResults]);
 
     setTimeout(()=>{
-      this.helper.triggergetResultEvent(this.global._backendRoute_AllResults,'POST', searchQuery);
+      this.criteriaObj.url = this.global._backendRoute_AllResults;
+      this.helper.triggergetResultEvent(this.criteriaObj);
     }, 0);
   }
+
+
 
   makeTagsEditable() {
     this.imageContainer.imageTags.forEach(function (value) {
@@ -142,6 +149,7 @@ export class BlogDisplayComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.criteriaObj.source = 'from blog display';
     console.log('ngoninit of blog-display.component.ts');
     console.log(this.blogPost);
 

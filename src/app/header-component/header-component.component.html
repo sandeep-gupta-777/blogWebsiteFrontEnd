@@ -135,7 +135,7 @@
        style="display: flex; align-items: center ;justify-content: center">
     <div style="background-color: #ff4f12; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;">
       <i class="fa fa-edit"></i></div>
-    <div style="width: 95%;padding-left: 5%"><a [routerLink]="['/new/blog']" [queryParams]="{query:''}">Create a new blog</a></div>
+    <div style="width: 95%;padding-left: 5%"><a [routerLink]="['/new/blog']">Create a new blog</a></div>
   </div>
   <br><br>
   <div class="row whiteText"  *ngFor="let result of [{query:'Angular'},{query:'NodeJS'},{query:'MongoDB'},{query:'HTML CSS'},{query:'Cat memes'}]"
@@ -153,7 +153,7 @@
         <div class="input-group">
           <input type="text"
                  [ngModel]="searchQuery" (ngModelChange)="debounce($event,200)"
-                 class="form-control" placeholder="Search..." aria-describedby="basic-addon2"
+                 class="form-control" placeholder="Search" aria-describedby="basic-addon2"
                 style="background: transparent; color: white"
           >
           <span style="background: transparent;" class="input-group-addon" id="basic-addon2"><i class="fa fa-search" style="color: white"> </i></span>
@@ -163,11 +163,8 @@
   </div>
   <!--search ends-->
 
-  <div class="row whiteText"  style="display: flex; align-items: center ;justify-content: center">
-    <div style="background-color: blue; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;"><i class="fa fa-user"></i></div>
-    <div style="width: 85%;padding-left: 5%"><a routerLink="login">Sign up or Login</a></div>
-  </div>
-  <div class="row whiteText" style="display: flex; align-items: center ;justify-content: center">
+
+  <div *ngIf="isLoggedIn()" class="row whiteText" style="display: flex; align-items: center ;justify-content: center">
     <div style="background-color: blue; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;"><i class="fa fa-dashboard"></i></div>
     <div style="width: 85%;padding-left: 5%"><a routerLink="dashboard">Dashboard</a></div>
   </div>
@@ -180,7 +177,14 @@
     <div style="background-color: blue; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;"><i class="fa fa-plus"></i></div>
     <div style="width: 85%;padding-left: 5%"><a routerLink="public">Create new thread</a></div>
   </div>
-
+  <div *ngIf="!isLoggedIn()" class="row whiteText"  style="display: flex; align-items: center ;justify-content: center">
+    <div style="background-color: blue; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;"><i class="fa fa-user"></i></div>
+    <div style="width: 85%;padding-left: 5%"><a routerLink="login">Sign up or Login</a></div>
+  </div>
+  <div *ngIf="isLoggedIn()" (click)="logout()" class="row whiteText"  style="display: flex; align-items: center ;justify-content: center">
+    <div style="background-color: blue; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;"><i class="fa fa-sign-out"></i></div>
+    <div style="width: 85%;padding-left: 5%"><a routerLink="login">Log out</a></div>
+  </div>
 
 </div>
 

@@ -38,6 +38,7 @@ export interface BlogPost{
   blogTitle:string,
   blogHTML?:string,
   blogDraftHTML?:string,
+  blogIsDirty?:boolean,
   blogText:String,
   blogAuthor_id?:string,
   blogAuthor_fullName?:string,
@@ -80,5 +81,15 @@ export interface BlogComment{
 
   commentDate?: Date,
   commentLikes?: [String]
+
+}
+
+export interface CriteriaObject{
+  url?:string,
+  user_id:string,
+  requestType:string,
+  searchQuery?:string,
+  source?:string,
+  searchQueryTImeStamp?:number
 
 }

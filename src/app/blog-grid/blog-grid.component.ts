@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {BlogPost, ImageContainer} from "../models";
+import {BlogPost, CriteriaObject, ImageContainer} from "../models";
 import {Shared} from "../shared.service";
 import {Helper} from "../helper.service";
 import {Global} from "../Global.service";
@@ -14,6 +14,7 @@ import {isUndefined} from "util";
 export class BlogGridComponent implements OnInit {
 
   parent;
+  criteriaObj:CriteriaObject =this.global.getCriteriaObject();
 
   ngOnDestroy(): void {
 
@@ -33,27 +34,29 @@ export class BlogGridComponent implements OnInit {
       this.notifyKeywordChangeEventSubscription.unsubscribe();
   }
   lastCall;
-  debounce(args,interval=200) {//TODO: shift this to helper class
+  debounce(searchQuery,interval=200) {//TODO: shift this to helper class
     //https://stackoverflow.com/questions/18177174/how-to-limit-handling-of-event-to-once-per-x-seconds-with-jquery-javascript
-    // let interval = 200;//100ms
+    this.criteriaObj.searchQuery = searchQuery;
     clearTimeout(this.lastCall);
     this.lastCall = setTimeout(() => {
-      this.triggerAllResultsObservable(args);
+      this.triggerAllResultsObservable(searchQuery);
     }, interval);
   }
 
-  triggerAllResultsObservable(newValue?:string){
+  triggerAllResultsObservable(searchQuery?:string){
     //navigate to http://localhost:4200/icons page is not already navigated
     if(this.router.url !== "/"+this.global._backendRoute_AllResults)//these are frontend routes but with same value
       this.router.navigate(["/"+ this.global._backendRoute_AllResults]);
-    if (!isUndefined(newValue)) {
-      this.searchQuery = newValue;
-      this.global.setSearchQuery(newValue);
+    if (!isUndefined(searchQuery)) {
+      this.searchQuery = searchQuery;
+      this.global.setSearchQuery(searchQuery);
     }
-    this.helper.notifyKeywordChangeEvent.emit(newValue);
+    this.helper.notifyKeywordChangeEvent.emit(searchQuery);
 
     setTimeout(()=>{
-      this.helper.triggergetResultEvent(this.global._backendRoute_AllResults,'POST',  this.global.getSearchQuery());
+      this.criteriaObj.url = this.global._backendRoute_AllResults;
+
+      this.helper.triggergetResultEvent(this.criteriaObj);
 
     }, 0);
     // this.helper.triggerIconGridComponentGetImages('AllIcons','POST',  newValue);
@@ -82,7 +85,7 @@ export class BlogGridComponent implements OnInit {
   private subscriptionPost;
   resultsArray: BlogPost[];
   loadingArray = [1,2];
-  searchQueryTImeStamp;
+  searchQueryTimeStamp;
   constructor(private sharedService: Shared, private helper:Helper, private global:Global, private router: Router, private activatedRoute:ActivatedRoute) {
   }
   test(){
@@ -159,6 +162,7 @@ export class BlogGridComponent implements OnInit {
 
 
   ngOnInit() {
+    this.criteriaObj.source= 'from blog grid';
     // debugger;
     let tempUrl = window.location.href;
     if(tempUrl.indexOf('parent=dashboard')>-1)//TODO: change this to something more robust
@@ -174,10 +178,17 @@ export class BlogGridComponent implements OnInit {
     });
 
     //TODO: check if this can be moved to helper function
-    this.triggerGetResultsEventSubscription = this.helper.getResultEvent.subscribe(({url,requestType, searchQuery})=>{
-      console.log(searchQuery,'  =================================================');
-      this.searchQueryTImeStamp = Date.now(); //at this time search is performed
-      let user_id = localStorage.getItem('userID');
+    this.triggerGetResultsEventSubscription = this.helper.getResultEvent.subscribe((criteriaObj)=>{
+      // let url = criteriaObj.url;
+      // let requestType = criteriaObj.requestType;
+      // let searchQuery = criteriaObj.searchQuery;
+      // criteriaObj.searchQueryTImeStamp = this.searchQueryTImeStamp;
+      criteriaObj.searchQueryTImeStamp=Date.now();
+      console.log('getting results from server for the following criteria object:');
+      console.log(criteriaObj);
+
+      this.searchQueryTimeStamp = Date.now(); //at this time search is performed
+      // let user_id = localStorage.getItem('userID');
       this.showLoadingIcon=true;
 
       //change the url accordingly, but not if blog-grid.component.ts is child component
@@ -187,17 +198,17 @@ export class BlogGridComponent implements OnInit {
         this.parent='dashaboard';
       }else {
         this.parent='';
-        this.router.navigate(['allresults'],{queryParams:{query:searchQuery}});
+        this.router.navigate(['allresults'],{queryParams:{query:criteriaObj.searchQuery}});
       }
 
-      if(requestType==='POST')
+      if(criteriaObj.requestType==='POST')
       {
-        if(!searchQuery) searchQuery ="";
+        if(!criteriaObj.searchQueryTImeStamp) criteriaObj.searchQuery ="";
 
-        this.subscriptionPost = this.helper.makePostRequest(url,{user_id, searchQuery:searchQuery,searchQueryTImeStamp:this.searchQueryTImeStamp}).subscribe(
-          (value) =>{
-
-            if(value.searchQueryTImeStamp< this.searchQueryTImeStamp){
+        this.subscriptionPost = this.helper.makePostRequest(criteriaObj.url,criteriaObj).subscribe(
+          (value:any) =>{
+          debugger;
+            if(value.searchQueryTimeStamp< this.searchQueryTimeStamp){
               console.log(value);
               console.log('old search...discarded');
               return;
@@ -221,15 +232,15 @@ export class BlogGridComponent implements OnInit {
         );
       }
       else {
-        this.subscriptionGet =  this.helper.makeGetRequest(url).subscribe(
-          (value) =>{
-            this.showLoadingIcon=false;
-            // this.imageContainers = value;
-            this.resultsArray = value;
-            // this.sortImageContainerArrayBy('-imageVoteCount');
-            this.sortResultsArrayBy('-imageVoteCount');//change here
-            value.length<1?this.showLoadMore=false:this.showLoadMore=true;//TODO: change 1 to 10
-          });
+        // this.subscriptionGet =  this.helper.makeGetRequest(url).subscribe(
+        //   (value) =>{
+        //     this.showLoadingIcon=false;
+        //     // this.imageContainers = value;
+        //     this.resultsArray = value;
+        //     // this.sortImageContainerArrayBy('-imageVoteCount');
+        //     this.sortResultsArrayBy('-imageVoteCount');//change here
+        //     value.length<1?this.showLoadMore=false:this.showLoadMore=true;//TODO: change 1 to 10
+        //   });
       }
 
     });

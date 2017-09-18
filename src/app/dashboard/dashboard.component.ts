@@ -6,6 +6,8 @@ import { Observable } from "rxjs";
 import {Helper} from "../helper.service";
 import {Shared} from "../shared.service";
 import {Global} from "../Global.service";
+import {userInfo} from "os";
+import {CriteriaObject} from "../models";
 // const URL = 'https://ffi-backend.herokuapp.com/upload';
 // const URL = 'http://localhost:3000/upload';
 
@@ -25,6 +27,7 @@ export class DashboardComponent implements OnInit{
   upload_status = "";
   URL = this.global.getbackendURL_heroku();
   highlightTab;
+  criteriaObj:CriteriaObject =this.global.getCriteriaObject();
   constructor (private helper: Helper, private sharedService: Shared,private http:Http, private el: ElementRef,private global:Global){
       // this.getUsersImage();
   }
@@ -45,8 +48,10 @@ export class DashboardComponent implements OnInit{
   //   this.helper.triggerIconGridComponentGetImages('users/uploaded','POST');
   // }
   getUsersBlogs(){
-    this.helper.triggergetResultEvent('users/writtenBlogs','POST');
-    console.log('get user blogs');
+
+    this.criteriaObj.url= 'users/writtenBlogs';
+    this.helper.triggergetResultEvent(this.criteriaObj);
+    console.log('get dirty blogs');
     this.highlightTab = 'My Blogs';
   }
 
@@ -57,9 +62,15 @@ export class DashboardComponent implements OnInit{
   // }
   //get all liked images by user
   getAllLikedBlogs(){
-    this.helper.triggergetResultEvent('users/likedBlogs','POST','from dashboard');
+    this.criteriaObj.url= 'users/likedBlogs';
+    this.helper.triggergetResultEvent(this.criteriaObj);
     this.highlightTab = 'Liked';
 
+  }
+  getAllDirtyBlogs(){
+    this.criteriaObj.url = 'users/dirtyBlogs';
+    this.helper.triggergetResultEvent(this.criteriaObj);
+    this.highlightTab = 'Drafts';
   }
 
 
@@ -106,6 +117,7 @@ export class DashboardComponent implements OnInit{
   //============================
 
   ngOnInit(): void {
+    this.criteriaObj.source = "from dashboard";
     let currentURL= window.location.pathname;
     if(currentURL==='/icons'){
       setTimeout(()=>{//may not be needed
