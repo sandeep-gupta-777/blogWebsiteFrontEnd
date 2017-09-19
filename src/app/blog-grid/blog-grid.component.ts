@@ -34,7 +34,7 @@ export class BlogGridComponent implements OnInit {
       this.notifyKeywordChangeEventSubscription.unsubscribe();
   }
   lastCall;
-  debounce(searchQuery,interval=200) {//TODO: shift this to helper class
+  debounce(searchQuery,interval=0) {//TODO: shift this to helper class
     //https://stackoverflow.com/questions/18177174/how-to-limit-handling-of-event-to-once-per-x-seconds-with-jquery-javascript
     this.criteriaObj.searchQuery = searchQuery;
     clearTimeout(this.lastCall);

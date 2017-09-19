@@ -139,7 +139,7 @@
   </div>
   <br><br>
   <div class="row whiteText"  *ngFor="let result of [{query:'Angular'},{query:'NodeJS'},{query:'MongoDB'},{query:'HTML CSS'},{query:'Cat memes'}]"
-       (click)="triggerAllResultsObservable(result.query)"
+       (click)="debounce(result.query)"
        style="display: flex; align-items: center ;justify-content: center" [ngClass]="{'active':searchQuery===result.query}">
     <div style="background-color: green; width: 5%;height: 40px;"></div>
     <div style="width: 95%;padding-left: 5%"><a [routerLink]="['/allresults']" [queryParams]="{query:result.query}">{{result.query}}</a></div>

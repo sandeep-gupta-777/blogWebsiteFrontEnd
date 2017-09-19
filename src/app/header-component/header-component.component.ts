@@ -66,6 +66,7 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
 
   debounce(searchQuery,interval=0) {//TODO: shift this to helper class, interval can be uptp 200
     //https://stackoverflow.com/questions/18177174/how-to-limit-handling-of-event-to-once-per-x-seconds-with-jquery-javascript
+    debugger;
     this.helper.notifyKeywordChangeEvent.emit(searchQuery);
     this.searchQuery = searchQuery;
     this.global.setSearchQuery(searchQuery);
@@ -88,7 +89,7 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
 
 
     setTimeout(()=>{
-
+      console.log('===========================');
       this.criteriaObj.url =this.global._backendRoute_AllResults;
       this.criteriaObj.searchQuery=this.searchQuery;
       console.log(this.criteriaObj);
