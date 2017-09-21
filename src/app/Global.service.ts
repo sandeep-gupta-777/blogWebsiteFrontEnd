@@ -1,5 +1,19 @@
 import {BlogComment, BlogPost, CriteriaObject, SiteUser} from "./models";
+import {Helper} from "./helper.service";
+import {Injectable, OnInit} from "@angular/core";
+import {EventService} from "./event.service";
+@Injectable()
 export class Global{
+
+  constructor(private eventService:EventService){
+
+    console.log('global init');
+    this.eventService.setLoggedInUserDetailsEvent.subscribe(
+      (value) => {
+        this._loggedInUserDetails = value;
+      });
+
+  }
   private _loggedInUserDetails:SiteUser;
   private _seachQuery:string;
   // private _backendURL_heroku = 'https://ffi-backend.herokuapp.com';
@@ -11,6 +25,8 @@ export class Global{
   public blogCommentsArray: BlogComment[];
 
   public previousSRPURL ;
+  public previousSRPQueryParams ;
+  public previousURL:String="allresults";
 
   // criteriaObject:CriteriaObject={searchQuery:this.getSearchQuery(),requestType:'POST',user_id:this.getLoggedInUserDetails()._id};
 
@@ -25,6 +41,7 @@ export class Global{
   setPreviousSRPURL(previousSRPURL){
     this.previousSRPURL = previousSRPURL;
   }
+
 
 
   getResultsArray(){
@@ -57,6 +74,7 @@ export class Global{
   setbackendURL_heroku(str){
     this._backendURL_heroku = str;
   }
+
 }
 
 

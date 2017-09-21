@@ -33,6 +33,7 @@
 
 <!--<div class="col-md-12 border pull-left" style="display: flex;flex-wrap: nowrap">-->
 
+
 <!--&lt;!&ndash;All icons button begins&ndash;&gt;-->
 <!--<button (click)="debounce('',0)"  routerLink="icons" class="btn btn-default btn-lg"> All Blogs</button>-->
 <!--&lt;!&ndash;All icons button ends&ndash;&gt;-->
@@ -125,7 +126,7 @@
   <div class="row center-vertical" style="height: 20%;">
     <!--logo starts here-->
     <div class="col-xs-12 ">
-      <a [routerLink]="['/allresults']" [queryParams]="{query:''}" ><img class="img-responsive" src="./assets/logo1.png "></a>
+      <a (click)="debounce('')"  [routerLink]="['/allresults']" [queryParams]="{query:''}" ><img class="img-responsive" src="./assets/logo1.png "></a>
       <!--<a routerLink="/allresults"><img class="img-responsive" src="./assets/Logo.png "></a>-->
     </div>
     <!--logo ends here-->
@@ -133,9 +134,11 @@
 
   <div class="row whiteText"
        style="display: flex; align-items: center ;justify-content: center">
-    <div style="background-color: #ff4f12; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;">
+    <div
+         style="background-color: #ff4f12; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;">
       <i class="fa fa-edit"></i></div>
-    <div style="width: 95%;padding-left: 5%"><a [routerLink]="['/new/blog']">Create a new blog</a></div>
+    <div (click)="goToBlogEditPage()" style="width: 95%;padding-left: 5%"><a>Create a new blog</a>
+    </div>
   </div>
   <br><br>
   <div class="row whiteText"  *ngFor="let result of [{query:'Angular'},{query:'NodeJS'},{query:'MongoDB'},{query:'HTML CSS'},{query:'Cat memes'}]"
@@ -177,13 +180,13 @@
     <div style="background-color: blue; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;"><i class="fa fa-plus"></i></div>
     <div style="width: 85%;padding-left: 5%"><a routerLink="public">Create new thread</a></div>
   </div>
-  <div *ngIf="!isLoggedIn()" class="row whiteText"  style="display: flex; align-items: center ;justify-content: center">
+  <div *ngIf="!isLoggedIn()" (click)="goToLoginPage()" class="row whiteText"  style="display: flex; align-items: center ;justify-content: center">
     <div style="background-color: blue; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;"><i class="fa fa-user"></i></div>
-    <div style="width: 85%;padding-left: 5%"><a routerLink="login">Sign up or Login</a></div>
+    <div style="width: 85%;padding-left: 5%"><a >Sign up or Login</a></div>
   </div>
   <div *ngIf="isLoggedIn()" (click)="logout()" class="row whiteText"  style="display: flex; align-items: center ;justify-content: center">
     <div style="background-color: blue; width: 15%;height: 40px; display: flex;align-items: center; justify-content: center;"><i class="fa fa-sign-out"></i></div>
-    <div style="width: 85%;padding-left: 5%"><a routerLink="login">Log out</a></div>
+    <div style="width: 85%;padding-left: 5%"><a>Log out</a></div>
   </div>
 
 </div>

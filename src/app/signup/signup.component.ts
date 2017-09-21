@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
     // let user:SiteUser = new SiteUser("","tempUsername",this.form.value.username, this.form.value.email,this.form.value.password);
     let user:SiteUser = {userName:this.form.value.username, fullName:this.form.value.full_name, password:this.form.value.password, email:this.form.value.email};
 
-    this.helper.signup(user) .subscribe((value) => {
+    this.helper.signup(user) .subscribe((value:any) => {
 
       if(value.problem_message){
         console.log(value.problem_message);
@@ -39,11 +39,12 @@ export class SignupComponent implements OnInit {
       //after sign up is done, log user in
       const user:SiteUser = {userName: this.form.value.username, email:this.form.value.email,password:this.form.value.password};
       this.helper.login(user).subscribe(
-        (data) =>{
+        (data:any) =>{
           console.log('saved in local stogare',data);
           localStorage.setItem('token',data.token);
-          localStorage.setItem('userID',data.user_details._id);
-          this.router.navigateByUrl('/');
+          localStorage.setItem('userID',data.user._id);
+          // this.router.navigateByUrl('/');
+          this.router.navigate([this.global.previousURL],{queryParams:this.global.previousSRPQueryParams});
           this.global.setLoggedInUserDetails(user);
         },
         error => {console.log(error)}

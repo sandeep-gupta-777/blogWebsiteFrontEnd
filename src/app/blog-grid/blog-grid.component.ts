@@ -36,6 +36,7 @@ export class BlogGridComponent implements OnInit {
   lastCall;
   debounce(searchQuery,interval=0) {//TODO: shift this to helper class
     //https://stackoverflow.com/questions/18177174/how-to-limit-handling-of-event-to-once-per-x-seconds-with-jquery-javascript
+    this.helper.notifyKeywordChangeEvent.emit(searchQuery);
     this.criteriaObj.searchQuery = searchQuery;
     clearTimeout(this.lastCall);
     this.lastCall = setTimeout(() => {
@@ -51,7 +52,6 @@ export class BlogGridComponent implements OnInit {
       this.searchQuery = searchQuery;
       this.global.setSearchQuery(searchQuery);
     }
-    this.helper.notifyKeywordChangeEvent.emit(searchQuery);
 
     setTimeout(()=>{
       this.criteriaObj.url = this.global._backendRoute_AllResults;
@@ -162,6 +162,7 @@ export class BlogGridComponent implements OnInit {
 
 
   ngOnInit() {
+    this.searchQuery= this.global.getSearchQuery();
     this.criteriaObj.source= 'from blog grid';
     // debugger;
     let tempUrl = window.location.href;
@@ -178,12 +179,14 @@ export class BlogGridComponent implements OnInit {
     });
 
     //TODO: check if this can be moved to helper function
-    this.triggerGetResultsEventSubscription = this.helper.getResultEvent.subscribe((criteriaObj)=>{
+    this.triggerGetResultsEventSubscription = this.helper.getResultEvent.subscribe((criteriaObj:CriteriaObject)=>{
       // let url = criteriaObj.url;
       // let requestType = criteriaObj.requestType;
       // let searchQuery = criteriaObj.searchQuery;
       // criteriaObj.searchQueryTImeStamp = this.searchQueryTImeStamp;
       criteriaObj.searchQueryTImeStamp=Date.now();
+      if(this.global.getLoggedInUserDetails())
+      criteriaObj.user_id = this.global.getLoggedInUserDetails()._id;
       console.log('getting results from server for the following criteria object:');
       console.log(criteriaObj);
 
@@ -193,13 +196,15 @@ export class BlogGridComponent implements OnInit {
 
       //change the url accordingly, but not if blog-grid.component.ts is child component
       // debugger;
-      if(tempUrl.indexOf('parent=dashboard')>-1)//TODO: change this to something more robust
-      {
-        this.parent='dashaboard';
-      }else {
-        this.parent='';
-        this.router.navigate(['allresults'],{queryParams:{query:criteriaObj.searchQuery}});
-      }
+      // if(this.criteriaObj.shouldNavigateToSRP && !this.criteriaObj.shouldNavigateToSRP){
+        if(tempUrl.indexOf('parent=dashboard')>-1)//TODO: change this to something more robust
+        {
+          this.parent='dashaboard';
+        }else {
+          this.parent='';
+          this.router.navigate(['allresults'],{queryParams:{query:criteriaObj.searchQuery}});
+        }
+      // }
 
       if(criteriaObj.requestType==='POST')
       {
@@ -207,7 +212,6 @@ export class BlogGridComponent implements OnInit {
 
         this.subscriptionPost = this.helper.makePostRequest(criteriaObj.url,criteriaObj).subscribe(
           (value:any) =>{
-          debugger;
             if(value.searchQueryTimeStamp< this.searchQueryTimeStamp){
               console.log(value);
               console.log('old search...discarded');

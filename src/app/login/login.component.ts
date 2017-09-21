@@ -28,7 +28,8 @@ export class LoginComponent implements OnInit {
           console.log('saved in local stogare',data);
           localStorage.setItem('token',data.token);
           localStorage.setItem('userID',data.user._id);
-          this.router.navigateByUrl('/');
+          // this.router.navigateByUrl(this.global.previousSRPURL);
+          this.router.navigate([this.global.previousURL],{queryParams:this.global.previousSRPQueryParams});
           this.global.setLoggedInUserDetails(data.user);
         },
         error => {

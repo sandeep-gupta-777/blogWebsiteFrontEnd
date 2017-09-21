@@ -90,6 +90,7 @@ export interface CriteriaObject{
   requestType:string,
   searchQuery?:string,
   source?:string,
-  searchQueryTImeStamp?:number
+  searchQueryTImeStamp?:number,
+    shouldNavigateToSRP? :boolean
 
 }

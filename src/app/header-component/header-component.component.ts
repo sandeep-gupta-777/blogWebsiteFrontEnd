@@ -5,6 +5,7 @@ import {Global} from "../Global.service";
 import {isUndefined} from "util";
 import {factoryOrValue} from "rxjs/operator/multicast";
 import {CriteriaObject} from "../models";
+import {EventService} from "../event.service";
 
 @Component({
   selector: 'app-header-component',
@@ -31,7 +32,7 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
   private routerEventSubscription;
   public searchQuery:string= "";
   public userfirstName="";
-  constructor( public helper: Helper, public global:Global,private activatedRoute:ActivatedRoute,
+  constructor( public helper: Helper,private eventService:EventService, public global:Global,private activatedRoute:ActivatedRoute,
                public router: Router) {
     helper.toggleClassEvent.subscribe((HTMLClass) => {
       this.headerFixed = true;
@@ -41,6 +42,8 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
 
   logout(){
     localStorage.clear();
+    this.global.previousURL = window.location.pathname;
+    this.global.previousSRPQueryParams = this.activatedRoute.snapshot.queryParams;
     console.log('logging out');
     this.router.navigate(['/login']);
   };
@@ -66,7 +69,6 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
 
   debounce(searchQuery,interval=0) {//TODO: shift this to helper class, interval can be uptp 200
     //https://stackoverflow.com/questions/18177174/how-to-limit-handling-of-event-to-once-per-x-seconds-with-jquery-javascript
-    debugger;
     this.helper.notifyKeywordChangeEvent.emit(searchQuery);
     this.searchQuery = searchQuery;
     this.global.setSearchQuery(searchQuery);
@@ -103,12 +105,31 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
     return localStorage.getItem('token')!== null;
   }
 
+  goToBlogEditPage(){
+    if(this.isLoggedIn())
+    this.router.navigate(['new/blog']);
+    else {
+      this.global.previousURL = 'new/blog';
+      this.router.navigate(['/login']);
+    }
+  }
 
+  goToLoginPage(){
 
+    this.global.previousURL = window.location.pathname;
+    this.global.previousSRPQueryParams = this.activatedRoute.snapshot.queryParams;
+    this.router.navigate(['/login']);
+
+    debugger;
+  }
 
   ngOnInit() {
+
+    this.helper.notifyKeywordChangeEvent.subscribe((searchQuery)=>{
+      this.searchQuery = searchQuery;
+    });
     this.criteriaObj.source = 'from header';
-    this.helper.setLoggedInUserDetailsEvent.subscribe(
+    this.eventService.setLoggedInUserDetailsEvent.subscribe(
       (value) => {
         this.userfirstName = value.fullName.split(" ")[0];
       });
@@ -134,14 +155,16 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
             this.helper.triggerIconGridComponentGetImages('AllIcons','POST',  this.global.getSearchQuery());
           },0);
         }
-        else if(currentURL==='/dashboard/likedBlogs'){
-          setTimeout(()=>{//may not be needed
+        else if(currentURL.indexOf('/dashboard/likedBlogs')>-1) {
+            setTimeout(()=>{//may not be needed
             this.criteriaObj.url =  'users/likedBlogs';
+            console.log('sending req for liked');
             this.helper.triggergetResultEvent(this.criteriaObj);
 
-          },0);
+          },1000);
         }
-        else if(currentURL==='/dashboard/writtenBlogs' && !this.global.resultsArray){
+        // else if(currentURL==='/dashboard/writtenBlogs' && !this.global.resultsArray){
+        else if(currentURL.indexOf('/dashboard/writtenBlogs')>-1 && !this.global.resultsArray) {
           // alert();
           setTimeout(()=>{//may not be needed
             this.criteriaObj.url =  'users/writtenBlogs';
@@ -154,12 +177,17 @@ export class HeaderComponentComponent implements OnInit, OnChanges {
           setTimeout(() => {//may not be needed
             this.criteriaObj.url =  'allresults';
             // this.helper.notifyKeywordChangeEvent.emit(this.searchQuery);
+            this.criteriaObj.searchQuery = this.searchQuery;
+            this.criteriaObj.shouldNavigateToSRP = false;
+            this.helper.notifyKeywordChangeEvent.emit(this.searchQuery);
             this.helper.triggergetResultEvent(this.criteriaObj);
-            this.changeRouterSubscription.unsubscribe();
+
           }, 0);
         }
+        this.changeRouterSubscription.unsubscribe();
       });
 
 
   }
+
 }

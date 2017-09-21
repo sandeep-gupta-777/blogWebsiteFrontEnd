@@ -2,6 +2,7 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {SiteUser} from "./models";
 import {Helper} from "./helper.service";
 import {Global} from "./Global.service";
+import {EventService} from "./event.service";
 // import { Helper } from './helper.service';
 // import {SiteUser} from "./models";
 // import {Global} from "./Global.service";
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit{
   showMenu = true;
   isSmallSizeDevice=false;
 
-  constructor(private helper:Helper, private global:Global,private ref : ChangeDetectorRef){
+  constructor(private helper:Helper, private eventService:EventService,private global:Global,private ref : ChangeDetectorRef){
 
    }
 
@@ -41,7 +42,7 @@ export class AppComponent implements OnInit{
        (value)=> {
          console.log(value);
          this.global.setLoggedInUserDetails(value[0]);
-         this.helper.setLoggedInUserDetailsEvent.emit(value[0]);
+         this.eventService.setLoggedInUserDetailsEvent.emit(value[0]);
 
         }
       );

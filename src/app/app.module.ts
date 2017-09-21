@@ -41,6 +41,7 @@ import { ImageGridComponent } from './image-grid/image-grid.component';
 import { ThreadComponent } from './thread/thread.component';
 import { CommentComponent } from './comment/comment.component';
 import { TrimStringPipe } from './trim-string.pipe';
+import {EventService} from "./event.service";
 
 //routes
 const appRoutes: Routes = [
@@ -115,7 +116,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes )
   ],
   providers: [
-   Helper,Global,Shared
+   Helper,Global,Shared,EventService
   ],
   bootstrap: [AppComponent]
 })

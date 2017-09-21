@@ -141,7 +141,7 @@ makePostRequest(url, body){
 }
 
   toggleClassEvent =  new EventEmitter();
-  setLoggedInUserDetailsEvent = new EventEmitter();
+
   setKeywordIntoSearchBarEvent = new EventEmitter();
   notifyKeywordChangeEvent = new EventEmitter();
 
