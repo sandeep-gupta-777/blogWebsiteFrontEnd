@@ -10,6 +10,8 @@ import {Helper} from "../helper.service";
 import {factoryOrValue} from "rxjs/operator/multicast";
 import {Shared} from "../shared.service";
 import {ActivatedRoute, Router} from "@angular/router";
+let  Prism = require('prismjs');
+
 
 declare let tinymce: any;
 @Component({
@@ -193,6 +195,11 @@ export class BlogPageComponent implements OnInit, AfterViewInit, OnDestroy, OnCh
 
   updateBlogOnServer(shouldUpdateblogHTMLAsWell:Boolean){
       // this.blogInstance.blogAuthor_id = this.global.getLoggedInUserDetails()._id;
+
+
+    // this.blogContent = Prism.highlight(this.blogContent, Prism.languages.javascript);
+    // this.html = html;
+    // console.log(html);
 
     this.messageFromServer = 'Saving...';
     let text = this.editor.getContent({format: 'text'});

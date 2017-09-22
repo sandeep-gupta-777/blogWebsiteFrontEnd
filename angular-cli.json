@@ -23,12 +23,13 @@
         "../node_modules/font-awesome/css/font-awesome.css",
         "styles.css",
 
-        "../node_modules/prismjs/themes/prism.css"
+        "../node_modules/prismjs/themes/prism-coy.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
         "../node_modules/bootstrap/dist/js/bootstrap.js",
         "../node_modules/prismjs/prism.js",
+
 
         "../node_modules/tinymce/tinymce.js",
         "../node_modules/tinymce/themes/modern/theme.js",
